@@ -1,0 +1,1901 @@
+<!-- Adding a button that displays results for ALL tokens-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Toronto Star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://misc.thestar.com/interactivegraphic/libraries/d3v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link href=“https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&display=swap” rel=“stylesheet”>
+    
+    <link rel="stylesheet" type="text/css" href="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/cta-style.css">
+<style>
+
+body {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+	}
+
+.clearfix:after {
+    visibility: hidden;
+    display: none;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    }
+    
+.clearfix {
+    display: block;
+    }
+
+.graphic-wrapper {
+  margin: 0 auto;
+  /*max-width: 592px; */
+}
+
+.graphic {
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+
+  max-width: 1030px; 
+  margin: 0 auto;
+
+}
+
+.graphic-top {
+  padding: 8px 0; 
+  margin:0 auto;
+  max-width: 592px; }
+  @media (min-width: 526px) {
+    .graphic-top {
+      padding: 12px 0; } }
+  @media (min-width: 592px) {
+    .graphic-top {
+      padding: 16px 0; } }
+
+h2.graphic-top__graphic-hed {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #333;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 4px; }
+  @media (min-width: 526px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 22px; } }
+  @media (min-width: 592px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 24px; } }
+
+h3.graphic-top__graphic-dek {
+  font-size: 16px;
+  line-height: 1.3em;
+  font-weight: 400;
+  margin: 0;
+  font-family: "TorstarTextO3", Times, serif;
+  color: #666;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 18px; } }
+
+      .graphic-legend {
+        text-align: left;
+        font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+        padding: 4px 0; 
+    margin:4px auto 0;
+    max-width: 592px;}
+        .graphic-legend__legendtext {
+          padding-bottom: 8px;
+          margin-right: 16px;
+          vertical-align: top;
+          display: none; }
+          @media (min-width: 526px) {
+            .graphic-legend__legendtext {
+              max-width: none; } }
+          .graphic-legend__legendtext__box {
+            width: 16px;
+            height: 16px;
+            float: left;
+            border-radius: 16px; }
+            @media (min-width: 526px) {
+              .graphic-legend__legendtext__box {
+                width: 20px;
+                height: 20px;
+                border-radius: 20px; } }
+          .graphic-legend__legendtext__text {
+            text-align: left;
+            margin: 0;
+            font-size: 14px;
+            line-height: 16px;
+            padding-left: 20px;
+            color: #404040; }
+            @media (min-width: 526px) {
+              .graphic-legend__legendtext__text {
+                font-size: 16px;
+                line-height: 20px;
+                padding-left: 24px; } }
+
+
+  .graphic-top__graphic-instructions {
+    margin:4px auto 10px;
+    max-width: 592px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2em;
+    font-weight: 400;
+    font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+    color: #999;
+    font-style: italic; }
+    @media (min-width: 620px) {
+      .graphic-top__graphic-instructions {
+        font-size: 13px; } }
+    @media (min-width: 849px) {
+      .graphic-top__graphic-instructions {
+        font-size: 14px; } }
+    .graphic-top__graphic-instructions__desktopspan {
+      display: none;
+    }
+     @media (min-width: 849px) {
+       .graphic-top__graphic-instructions__desktopspan {
+        display: inline; }
+         .graphic-top__graphic-instructions__mobilespan {
+        display: none; } 
+      }
+
+.graphic-bottom {
+  margin: 12px auto 0;
+  padding: 6px 0 16px;
+  border-top: 1px solid #cfcfcf; 
+  max-width: 592px; }
+  .graphic-bottom:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0; }
+  @media (min-width: 526px) {
+    .graphic-bottom {
+      padding-top: 7px; } }
+  @media (min-width: 592px) {
+    .graphic-bottom {
+      padding-top: 8px; } }
+
+p.graphic-bottom__graphic-source {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-source {
+      max-width: 65%;
+      vertical-align: top;
+      float: left; } }
+p.graphic-bottom__graphic-byline {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-byline {
+      text-align: right;
+      max-width: 50%;
+      vertical-align: top;
+      float: right; } }
+p.graphic-bottom__notetext {
+  margin: 0;
+  text-align: left;
+  font-size: 11px;
+  line-height: 1.3em;
+  padding-bottom: 8px;
+  color: #666;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__notetext {
+      font-size: 12px; } }
+  @media (min-width: 592px) {
+    p.graphic-bottom__notetext {
+      font-size: 12px; } }
+
+
+      .interactive-graphic-cta.interactive-graphic-cta__desktop {
+        margin: 0;
+      }
+
+      .graphic .hoverinstructions {
+        max-width: 592px;
+        margin: 25px auto 0;
+      }
+
+
+
+/*----------------------------------------PROJECT CSS START ----------------------------------------*/
+
+.filterBox{
+  width: 100%;
+  /*border: 1px solid red;*/
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filterParties{
+  /*float: left;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin:10px auto;
+  /*flex-basis: 25%;*/
+  /*border: 1px dashed green;*/
+}
+
+.filterIntroText{
+  flex-basis: 100%;
+  text-align: left;
+  font-size: 1.1em;
+  font-weight: 200;
+  color: #808080;
+  padding: 5px 0; 
+
+}
+
+.filterButton-group{
+    margin: 0 auto;
+    max-width: 592px;
+  /*float: right;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  /*flex-basis: 25%;*/
+  /*margin-top: 10px;*/
+}
+
+.filterButton{
+  /*height: 30px;*/
+  flex-grow: 1;
+  float: none;
+}
+
+.filterButton-category{
+  /*height: 30px;*/
+  /*background-color: whitesmoke;*/
+  margin: 1px;
+  /*border: 1px solid #808080;*/
+  border-radius: 10px;
+  float: none;
+}
+
+.filterButton-token{
+  height: 30px;
+  background-color: whitesmoke;
+  margin: 1px;
+  border: 1px solid #808080;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.filterButton-group .filterButton{
+  padding: 8px 8px 0;
+  /*flex-basis: 49%;*/
+}
+
+.filterParties .filterButton{
+  flex-basis: 17%;
+  text-transform: uppercase;
+  padding: 3px 3px 3px;
+}
+
+@media all and (max-width: 422px) {
+    .filterParties .filterButton{
+      /*flex-basis: 49.5%;*/
+    }
+  }
+
+.selected {
+  pointer-events: none;
+  /*color: #f8f8f8;*/
+  color: #dddddd;
+}
+
+#ndp.selected {
+  /*background-color: #f8A337;*/
+}
+
+#con.selected {
+  /*background-color: #19547E;*/
+}
+
+#lib.selected {
+  /*background-color: #DA3037;*/
+}
+
+#gre.selected {
+  /*background-color: #4DA659;*/
+}
+
+.filterButton-group .selected{
+  background-color: dimgray;
+  color: #f8f8f8;
+}
+
+.filterButton:hover {
+  /*background-color: darkgray;*/
+  background-color: #636363;
+  cursor: pointer;
+  color: #F8F8F8;
+}
+
+.filterButton.selected:hover {
+  background-color: dimgray;
+  pointer-events: none;
+}
+
+
+.guidelineBox {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+}
+
+#menuLabel{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.3em;
+
+  cursor: pointer;
+  background-color: #f8f8f8;
+  padding: 7px 6px 6px;
+}
+
+#burgerMenu, #menuLabel{
+  display: none;
+}
+
+input#burgerMenu {
+    display: none;
+}
+
+.fa-times{
+  display: none;
+}
+
+input#burgerMenu:checked +label .fa-bars {
+    display: none;
+}
+
+input#burgerMenu:checked +label .fa-times {
+    display: inline;
+}
+
+
+
+.filterMenu{
+  /*position: absolute;*/
+  /*top: 0;*/
+  z-index: 10;
+
+  /*writing-mode: vertical-rl;*/
+  text-orientation: upright;
+}
+
+@media all and (max-width: 422px) {
+  .guidelineBox {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+.guideline {
+  /*display: block;*/
+  /*height: 100px;*/
+  flex-basis: 49.5%;
+  margin-bottom: 2px;
+  border: 0.5px solid #EEE;
+  /*border-top: 1px solid #CCC;*/
+  overflow: hidden;
+  padding: 10px;
+  color: #333;
+}
+
+@media all and (max-width: 580px) {
+  .guideline {
+  flex-basis: 49.5%;
+  }
+}
+
+@media all and (max-width: 422px) {
+  .guideline {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+.guideline:hover {
+  background-color: #e8e8e8;
+  cursor: pointer;
+  border-bottom: 1px solid darkgray;
+  border-right: 1px solid darkgray;
+  border-top: 1px solid #e8e8e8;
+}
+
+.guideline:hover .moreLess{
+  color: black;
+}
+
+.guideline h4 {
+  margin: 3px 0 0;
+}
+
+.boardTitle{
+  font-weight: 600;
+
+}
+
+.contentLarge {
+  display: none;
+}
+
+.guideline p {
+  margin: 5px 0 0;
+}
+
+.party {
+  border-left: 4px solid;
+  padding-left: 5px;
+}
+
+
+.guideline .party {
+  border-color: #82a710;
+
+}
+
+.categoryLogos {
+  background-size: cover;
+  width: 80px;
+  height: 80px;
+  /*display: inline-block;*/
+  margin: 0 auto;
+  padding: 0;
+  vertical-align: text-bottom;
+}
+
+
+/*------------------------         -------------------------------*/
+
+.baselineShift{
+  position: relative;
+  top:1px;
+}
+
+h4.category {
+  /*color: #BADA55;*/
+  color: #82a710;
+}
+
+.hidden {
+  display: none;
+}
+
+.showText {
+  display: block;
+}
+
+.imagecontainer {
+  margin: 0 auto;
+  max-width: 592px;
+  display: flex;
+}
+
+.graphicImage {
+  max-width: 50%;
+}
+
+
+@media all and (max-width: 580px) {
+}
+
+@media all and (max-width: 422px) {
+  .filterBox {
+    top:0;
+    padding: 2px;
+    background-color: #f8f8f8;
+    /*background-color: green;*/
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  input#burgerMenu:checked ~ .filterBox {
+    max-height: 100%;
+  }
+
+  #burgerMenu, #menuLabel{
+    display: block;
+  }
+
+  .filterMenu{
+    padding: 10px 5px 5px;
+    /*position: -webkit-sticky; /* Safari */*/
+    top:0px;
+    /*position: sticky;*/
+    visibility: visible;
+  }
+
+  .guidelineBox {}
+
+  .guidelineBox{
+    /*margin-top: 400px;*/
+  }
+
+}
+
+#svg-container, #svg-container2 {
+  margin: 0 auto 35px;
+  max-width: 1030px;
+  font-family:  ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; }
+}
+
+#svg-container2 {
+  margin-top: 20px !important;
+}
+
+#svg-container {
+  margin: 0 auto;
+  position:relative;
+
+  /*background-image: url('img/biden_web_BW.png'); */
+  /*background-image: url('img/trump-biden-composite.png'); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*height: 500px;*/
+}
+
+#svg-container img {
+  margin: 20px auto;
+  position:absolute;
+  bottom: 6px;
+
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+  height: 75%;
+  opacity: 0.75;
+}
+
+@media (max-width: 929px) {
+  #svg-container img  {
+    height: 30%;
+  }
+}
+
+@media (max-width: 715px) {
+  #svg-container img  {
+    height: 50%;
+  }
+}
+
+@media (max-width: 715px) {
+
+  .graphicImage{
+    display:none;
+  }
+}
+
+.biden-image{
+
+}
+
+.trump-image{
+  right: 0;
+}
+
+
+
+
+svg {
+  /*border: 1px solid #ccc;*/
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*height:500px;*/
+}
+
+.axis line,
+.axis path {
+  shape-rendering: crispEdges;
+  fill: transparent;
+  stroke: #404040;
+}
+
+.axis text {
+  font-size: 12px;
+  fill: #404040;
+  letter-spacing: 0.3px;
+  font-family:  ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; }
+  @media (min-width: 526px) {
+    .axis text {
+      font-size: 12px; } }
+
+
+.bar {
+  /*fill-opacity: 0.5;*/
+}
+.bar.left {
+  /*fill: steelblue;*/
+  fill: #0478BC;
+}
+.bar.right {
+  /*fill: firebrick;*/
+  fill: #CC3517;
+}
+
+#chart2 {
+  height: 300px; }
+  @media (min-width: 526px) {
+    #chart2 {
+      height: 400px; } }
+
+#hoverbox {
+  display: none; }
+  @media (min-width: 592px) {
+    #hoverbox {
+      display: block; } }
+
+.y.axis line, .y.axis path, .t.axis path, .t.axis text {
+  display: none; }
+
+.t.axis line {
+  stroke: #cfcfcf;
+  stroke-dasharray: 3,10; }
+
+.c {
+  fill: #0478BC;
+  stroke: #fff;
+  stroke-width: 2px; }
+
+.cd {
+  fill: #CC3517;
+  stroke: #fff;
+  stroke-width: 2px; }
+
+.y1, .y2 , .y3 {
+  font-size: 12px; }
+
+.y2 {
+  fill: #0478BC;
+  font-weight: 600; }
+
+.y3 {
+  fill: #CC3517;
+  font-weight: 600; }
+
+.line {
+  fill: none;
+  stroke: #0077BB;
+  stroke-width: 2px; }
+  @media (min-width: 526px) {
+    .line {
+      stroke-width: 3px; } }
+
+.axis text.axislabel {
+  font-size: 11px;
+  fill: #666; }
+  @media (min-width: 526px) {
+    .axis text.axislabel {
+      font-size: 12px; } }
+  @media (min-width: 592px) {
+    .axis text.axislabel {
+      font-size: 13px; } }
+
+
+
+      .axis .axislabel {
+          font-size: 18px;
+          font-weight: 600;
+      }
+
+      .labelLeft.axis text.axislabel, .labelBiden {
+        fill: #0478BC;
+      }
+
+      .labelRight.axis text.axislabel, .labelTrump  {
+        fill: #CC3517;
+      }
+
+      @media (max-width: 300px) {
+        .axis text {
+          font-size: 10px;
+        }
+
+        .axis .axislabel {
+          font-size: 12px;
+        }
+      }
+
+
+
+/*----------------------------------------PROJECT CSS END ----------------------------------------*/
+
+
+
+</style>
+</head>
+
+
+
+
+<body>
+  <div class="graphic-wrapper timeline-sentiment-wrapper">
+    <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Tweets by topic and associated sentiment</h2>
+        <h3 class="graphic-top__graphic-dek">Looking at the past two weeks of the candidates' tweets and  associations in each tweet to evaluate the positive or negative associations on the subject/topic</h3>
+    </div>
+
+    <div class="graphic">
+
+<!-- ----------------------------------------PROJECT HTML START ----------------------------------------  -->
+      <div class="filterMenu"><input type="checkbox" id="burgerMenu"><label for="burgerMenu" id="menuLabel">Filters <i class="fas fa-bars"></i> <i class="fas fa-times"></i></label>
+       
+        <div class="filterBox clearfix">
+
+        <h3 class="graphic-top__graphic-instructions">
+          <span class="interactive-graphic-cta interactive-graphic-cta__desktop"><img height="23px" class="interactive-graphic-cta-image" src="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/SVG/Tap.svg"></span>
+          <span class="graphic-top__graphic-instructions__desktopspan">Click</span><span class="graphic-top__graphic-instructions__mobilespan">Tap</span> on the buttons to display emotion results. 
+        </h3>
+        
+          <!-- <div class="imagecontainer">
+            <img class="graphicImage biden-image" src="img/biden_web_2_BW.png">
+            <img class="graphicImage trump-image" src="img/trump_web_2_BW.png">
+          </div> -->
+
+
+            <div class="filterButton-group">
+              <!-- <div class="filterIntroText">Choose a word</div> -->
+              <div class="filterButton filterButton-token selected" id="all">all tweets</div>
+              <div class="filterButton filterButton-token" id="america">america</div>
+              <div class="filterButton filterButton-token" id="elections">elections</div>
+              <div class="filterButton filterButton-token" id="joe">joe</div>
+              <div class="filterButton filterButton-token" id="ballots">ballots</div>
+              <div class="filterButton filterButton-token" id="country">country</div>
+              <div class="filterButton filterButton-token" id="trump">trump</div>
+              <div class="filterButton filterButton-token" id="democrat">democrat</div>
+              <div class="filterButton filterButton-token" id="republicans">republican</div>
+              <div class="filterButton filterButton-token" id="maga">maga</div>
+              <div class="filterButton filterButton-token" id="canada">canada</div>
+              <div class="filterButton filterButton-token" id="black">black</div>
+              <div class="filterButton filterButton-token" id="industry">industry</div>
+              <div class="filterButton filterButton-token" id="hispanic">hispanic</div>
+              <div class="filterButton filterButton-token" id="covid">covid</div>
+              <div class="filterButton filterButton-token" id="virus">virus</div>
+              <div class="filterButton filterButton-token" id="healthcare">healthcare</div>
+              <div class="filterButton filterButton-token" id="health">health</div>
+              <div class="filterButton filterButton-token" id="people">people</div>
+              <div class="filterButton filterButton-token" id="women">women</div>
+            </div>
+
+            <h3 class="graphic-top__graphic-instructions">
+              <span class="interactive-graphic-cta interactive-graphic-cta__desktop"><img height="23px" class="interactive-graphic-cta-image" src="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/SVG/Hover.svg"></span>
+              <span class="graphic-top__graphic-instructions__desktopspan">Hover</span><span class="graphic-top__graphic-instructions__mobilespan">Tap</span> on the timeline to display total mentions
+            </h3>
+                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+        </div>
+      </div>
+
+      <div id="svg-container2">
+        <!-- <svg id="democrat-chart"></svg> -->
+        <!-- <svg id="republican-chart"></svg> -->
+      </div>
+
+      </div> <!-- END OF GRAPHIC-->
+
+    <!-- <div class="graphic-top"> -->
+        <!-- <h2 class="graphic-top__graphic-hed">Sentiment association by word</h2> -->
+        <!-- <h3 class="graphic-top__graphic-dek">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra libero sit amet sem aliquet auctor. Maecenas tincidunt nisl non ante dictum joebidensuada. Curabitur accumsan eros a libero ultrices, et aliquet arcu dictum. Nunc ut tellus vel tortor tincidunt semper eu at ipsum. Quisque volutpat aliquet mi a convallis. Proin eget convallis sapien. Suspendisse convallis porttitor lorem sit amet tempor. Curabitur et ante sem. Nam eget mauris eget turpis auctor convallis a ut purus. Maecenas quis ornare nisl. Duis quis massa at ligula hendrerit iaculis. Cras varius eleifend viverra.</h3> -->
+    <!-- </div> -->
+
+    <div class="graphic">
+
+<!-- 
+      <div class="graphic-legend">
+          <div class="graphic-legend__legendtext" id="legendtext1"><div class='graphic-legend__legendtext__box' id="value1"></div><p class="graphic-legend__legendtext__text"></p></div>
+          <div class="graphic-legend__legendtext" id="legendtext2"><div class='graphic-legend__legendtext__box' id="value2"></div><p class="graphic-legend__legendtext__text"></p></div>
+      </div> -->
+      
+      <div id="svg-container">
+          <img class="graphicImage biden-image" src="img/biden_web_BW.png">
+          <img class="graphicImage trump-image" src="img/trump_web_BW.png">
+          <!-- <svg id="chart"></svg> -->
+      </div>
+
+
+    </div> <!-- END OF GRAPHIC-->
+
+
+
+      <div class="guidelineBox clearfix">
+
+
+      </div>
+<!-- ----------------------------------------PROJECT HTML END ---------------------------------------- -->
+      
+
+    </div>
+
+    <div class="graphic-bottom">
+        <!-- <p class="graphic-bottom__notetext" id="notetext">NOTE: All letters have been transformed to lowercase to guarantee matches for all case uses of the same word.</p> -->
+        <p class="graphic-bottom__notetext" id="notetext">Methodology: The data was gathered from Twitter. Each tweet's text is reduced to its minimum common base by stemming words, removing stop words, removing punctuation and formating all letters to lowercase. Using an algorithm each tweet is run though an algorithm that compares each word within a tweet with a collection of words and their associations. This algorithm will assign a possitive and negative value based on that comparison. Read more about the software used <a href="https://cran.r-project.org/web/packages/syuzhet/vignettes/syuzhet-vignette.html">here</a></p>
+        <!-- <p class="graphic-bottom__graphic-source" id="source">Source: TKTK</p> -->
+        <p class="graphic-bottom__graphic-byline" id="byline">Andres Plana/ Star graphic</p>
+    </div>
+  </div>
+
+
+
+
+
+    <script>
+
+    var trump_df = []; 
+    var biden_df = [];
+
+    var timeline_DF_trump = [];
+    var timeline_DF_biden = [];
+
+    data = [];
+    timelinedata = [];
+
+    var theId = 'all';
+
+    var results = {
+      mentions_dem: 0,
+      pos_dem: 0,
+      neg_dem: 0,
+      mentions_rep: 0,
+      pos_rep: 0,
+      neg_rep: 0
+    }
+
+    var tokenData = [];
+
+
+    function tokenMath(token) {
+      results = {
+        mentions_dem: 0,
+        pos_dem: 0,
+        neg_dem: 0,
+        mentions_rep: 0,
+        pos_rep: 0,
+        neg_rep: 0
+      }
+
+      if (token == 'all_mentions') {
+          ticks = 4;
+
+          for ( var i = 0; i < trump_df.length; i++) {
+              results.mentions_rep += 1
+              results.pos_rep = results.pos_rep + Number(trump_df[i].positive)
+              results.neg_rep = results.neg_rep + Number(trump_df[i].negative)
+          }
+
+          for ( var i = 0; i < biden_df.length; i++) {
+              results.mentions_dem += 1
+              results.pos_dem = results.pos_dem + Number(biden_df[i].positive)
+              results.neg_dem = results.neg_dem + Number(biden_df[i].negative)
+          }
+
+      } else {
+
+              if (width > 512) {
+                ticks = 12;
+              }
+
+          for ( var i = 0; i < trump_df.length; i++) {
+            if ( trump_df[i][token] == 'TRUE' ) {
+              // console.log(i + 2, trump_df[i].full_tweet_text)
+              // Add totals
+              results.mentions_rep += 1
+              results.pos_rep = results.pos_rep + Number(trump_df[i].positive)
+              results.neg_rep = results.neg_rep + Number(trump_df[i].negative)
+            }
+          }
+
+          for ( var i = 0; i < biden_df.length; i++) {
+            if ( biden_df[i][token] == 'TRUE' ) {
+              // console.log(i + 2, biden_df[i].full_tweet_text)
+              // Add totals
+              results.mentions_dem += 1
+              results.pos_dem = results.pos_dem + Number(biden_df[i].positive)
+              results.neg_dem = results.neg_dem + Number(biden_df[i].negative)
+            }
+          }
+        
+      }
+      // console.log(results)
+
+      if (token == 'all_mentions') {
+        tokenData = [
+            // {group: 'Total Tweets', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+            {group: 'Usage (%)', joebiden: 0, donaldTrump: 0},
+            {group: 'Negative', joebiden: results.neg_dem, donaldTrump: results.neg_rep},
+            {group: 'Positive', joebiden: results.pos_dem, donaldTrump: results.pos_rep},
+            {group: 'Mentions', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+          ];
+      } else {
+        tokenData = [
+          // {group: 'Total Tweets', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+          {group: 'Usage (%)', joebiden: results.mentions_dem/biden_df.length*100, donaldTrump: results.mentions_rep/trump_df.length*100},
+          {group: 'Negative', joebiden: results.neg_dem, donaldTrump: results.neg_rep},
+          {group: 'Positive', joebiden: results.pos_dem, donaldTrump: results.pos_rep},
+          {group: 'Mentions', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+        ];
+      }
+
+      // console.log(tokenData)
+    }
+
+      // so sick of string concatenation for translations
+      function translation(x,y) {
+        return 'translate(' + x + ',' + y + ')';
+      }
+
+    //--------------------------------------------------------------- svg setup
+      // SET UP DIMENSIONS
+      var width = parseInt(d3.select('#svg-container').style('width')),
+          height = 300;
+
+      var ticks = 4;
+      if (width > 512) {
+        ticks = 12;
+      }
+
+      // console.log(parseInt(d3.select('#svg-container').style('width')))
+
+
+          
+      // margin.middle is distance from center line to each y-axis
+      var margin = {
+        top: 20,
+        right: 20,
+        bottom: 24,
+        left: 15,
+        middle: 60
+      };
+          
+      // the width of each side of the chart
+      var regionWidth = width/2 - margin.middle;
+
+      // these are the x-coordinates of the y-axes
+      var pointA = regionWidth,
+          pointB = width - regionWidth;
+
+
+      // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
+      // var totalPopulation = d3.sum(tokenData, function(d) { return d.joebiden + d.donaldTrump; }),
+      //     percentage = function(d) { return d / totalPopulation; };
+        
+      // console.log(totalPopulation, percentage)
+
+      var svg = d3.select('#svg-container').append('svg')
+        .attr("id", "chart1")
+        .attr('width', margin.left + width + margin.right)
+        .attr('height', margin.top + height + margin.bottom)
+        // ADD A GROUP FOR THE SPACE WITHIN THE MARGINS
+        .append('g')
+          .attr('transform', translation(0, margin.top));
+
+
+
+
+    d3.csv('data/trump.csv',function(trumpdata){
+      trumpdata.forEach(function(d,i){
+          thisDate = new Date(d.created_at)
+          d.thedate = thisDate.getDate();
+          d.themonth = thisDate.getMonth() + 1;
+          d.theyear = thisDate.getFullYear();
+          trump_df.push(d);
+
+          datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+          timeline_DF_trump[datekeys] = {date: datekeys, value1: 0}
+      })
+        // console.log(trump_df)
+
+      d3.csv('data/biden.csv',function(bidendata){
+        bidendata.forEach(function(d,i){
+          thisDate = new Date(d.created_at)
+          d.thedate = thisDate.getDate();
+          d.themonth = thisDate.getMonth() + 1;
+          d.theyear = thisDate.getFullYear();
+          biden_df.push(d);
+
+          datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+          timeline_DF_biden[datekeys] = {date: datekeys, value1: 0}
+        })
+
+        // console.log(biden_df)
+
+        // ------------------------------------------------------- TIMELINE
+
+            var totalTester = 0;
+            var thetoken = 'trump';
+            var getToken = thetoken + '_mentions' 
+
+            function getTimelineData(tokenword) {
+              // console.log(tokenword)
+
+
+            // timeline_DF_trump.splice(0, timeline_DF_trump.length)
+            // timeline_DF_biden.splice(0, timeline_DF_biden.length)
+
+
+            trumpdata.forEach(function(d,i){
+              datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+              timeline_DF_trump[datekeys] = {date: datekeys, value1: 0}
+            })
+
+            bidendata.forEach(function(d,i){
+              datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+              timeline_DF_biden[datekeys] = {date: datekeys, value1: 0}
+            })
+            // timeline_DF_trump = [];
+            // timeline_DF_biden = [];
+
+            if (tokenword == 'all_mentions') {
+
+                totalTester = 0;
+                trump_df.forEach(function(d,i){
+                    // console.log("pass")
+
+                      datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+                      timeline_DF_trump[datekeys].value1 = timeline_DF_trump[datekeys].value1 + 1
+                      // thisdated = d.themonth
+                      // thisdated = d.theyear
+                      totalTester++
+
+                })
+
+                totalTester = 0;
+                biden_df.forEach(function(d,i){
+                    // console.log("pass")
+
+                      datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+                      timeline_DF_biden[datekeys].value1 = timeline_DF_biden[datekeys].value1 + 1
+                      // thisdated = d.themonth
+                      // thisdated = d.theyear
+                      totalTester++
+
+                })
+
+
+               d3.select('#chart2 .y.axis .axislabel').text("Total tweets")
+
+            } else {
+
+                totalTester = 0;
+                trump_df.forEach(function(d,i){
+                  if (d[tokenword] == 'TRUE') {
+                    // console.log("pass")
+
+                      datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+                      timeline_DF_trump[datekeys].value1 = timeline_DF_trump[datekeys].value1 + 1
+                      // thisdated = d.themonth
+                      // thisdated = d.theyear
+                      totalTester++
+                  }
+
+                })
+
+                totalTester = 0;
+                biden_df.forEach(function(d,i){
+                  if (d[tokenword] == 'TRUE') {
+                    // console.log("pass")
+
+                      datekeys = d.thedate + '/' + d.themonth + '/' + d.theyear
+                      timeline_DF_biden[datekeys].value1 = timeline_DF_biden[datekeys].value1 + 1
+                      // thisdated = d.themonth
+                      // thisdated = d.theyear
+                      totalTester++
+                  }
+
+                })
+
+
+               d3.select('#chart2 .axislabel').text("Total mentions of '" + theId + "'")
+
+            }
+
+            var timeline_df_keys = [];
+
+            if (d3.keys(timeline_DF_biden) >= d3.keys(timeline_DF_trump)) {
+              timeline_df_keys = d3.keys(timeline_DF_biden)
+            } else {
+              timeline_df_keys = d3.keys(timeline_DF_trump)
+            } 
+               
+              // console.log(timeline_df_keys)
+
+            timelinedata.splice(0, timelinedata.length)
+
+            // var timelinedata = [];
+            var parseDate = d3.timeParse("%d/%m/%Y")
+
+            for (var i = 0; i < timeline_df_keys.length; i++) {
+
+               if (timeline_DF_biden[timeline_df_keys[i]].date != "") {
+
+                var pushthisvalue_biden = 0;
+                var pushthisvalue_trump = 0;
+
+                if ( timeline_DF_biden[timeline_df_keys[i]] != undefined ) {
+                  pushthisvalue_biden = timeline_DF_biden[timeline_df_keys[i]].value1;
+                }
+                if ( timeline_DF_trump[timeline_df_keys[i]] != undefined ) {
+                  pushthisvalue_trump = timeline_DF_trump[timeline_df_keys[i]].value1;
+                } 
+                   timelinedata.push({"date": parseDate(timeline_df_keys[i]), 
+                     "value1": pushthisvalue_biden, 
+                     "value2": pushthisvalue_trump 
+                   });
+                 }
+               };
+
+               // timelinedata.forEach(function(d) {
+               //     d.date = parseDate(d.date);
+               //   });
+
+            
+
+              // console.log(timelinedata)
+
+            }
+
+              // console.log(totalTester)
+
+        // ------------------------------------------------------- TIMELINE
+
+
+    tokenMath('all_mentions')
+    getTimelineData('all_mentions')
+
+    var maxValue = Math.max(
+      d3.max(tokenData, function(d) { return d.joebiden; }),
+      d3.max(tokenData, function(d) { return d.donaldTrump; })
+    );
+
+    // SET UP SCALES
+      
+    // the xScale goes from 0 to the width of a region
+    //  it will be reversed for the left x-axis
+    var xScale = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([0, regionWidth])
+      .nice();
+
+    var xScaleLeft = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([regionWidth, 0]);
+
+    var xScaleRight = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([0, regionWidth]);
+
+      var labelArray = ['Percentage','Positive associations','Negative associations','Percentage']
+
+    var yScale = d3.scaleBand()
+      .domain(tokenData.map(function(d) { return d.group; }))
+      // .domain(labelArray.map(function(d) { return d; }))
+      // .range([height,0], 0.1);
+      .rangeRound([height,0], 0.1)
+      .padding(0.3);
+
+    var yAxisLeft = svg.append("g")
+              .attr("class", "ychart1 axis left")
+              .attr("transform", "translate(" + (width/2 - margin.middle) + " ,0)")
+              .call(d3.axisRight(yScale)
+                  .ticks(4,0)
+                  );
+
+    var yAxisRight = svg.append("g")
+              .attr("class", "ychart1 axis right")
+              .attr("transform", "translate(" + (width/2 + margin.middle) + " ,0)")
+              .call(d3.axisLeft(yScale)
+                  .ticks(4,0)
+                  // .tickSize(width)
+                  .tickPadding(margin.middle-4)
+                  .tickFormat('')
+                  );
+
+    var xAxisRight = svg.append("g")
+                .attr("class", "xchart1 axis")
+                .attr("transform", "translate(0," + (height) + ")")
+                .call(d3.axisBottom(xScaleLeft)
+                  .ticks(ticks)
+                  );
+
+
+
+    var xAxisLeft = svg.append("g")
+                .attr("class", "xchart1 axis")
+                .attr("transform", "translate(" + pointB + "," + (height) + ")")
+                .call(d3.axisBottom(xScaleRight)
+                  .ticks(ticks)
+                  );
+
+
+
+
+
+    // MAKE GROUPS FOR EACH SIDE OF CHART
+    // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
+    var leftBarGroup = svg.append('g')
+      .attr('transform', translation(pointA, 0) + 'scale(-1,1)');
+    var rightBarGroup = svg.append('g')
+      .attr('transform', translation(pointB, 0));
+
+    // DRAW AXES
+    svg.append('g')
+      .attr('class', 'axis y left')
+      // .call(yAxisLeft)
+    svg.selectAll('.ychart1.left text')
+      .attr('transform', translation(margin.middle-10, 0))
+      .style('text-anchor', 'middle');
+      // .call(xAxisRight);
+
+
+      svg.append("g")
+          .attr("class", "y axis labelLeft")
+          .append("text")
+            .attr("class", "axislabel")
+            .attr("transform", function(d) {return "translate(" + pointA + ",-15)"})
+            .attr("dy", ".71em")
+            .style("text-anchor","end")
+            .text(function(d) { return "@JoeBiden"});
+
+      svg.append("g")
+          .attr("class", "y axis labelRight")
+          .append("text")
+            .attr("class", "axislabel")
+            .attr("transform", function(d) {return "translate(" + pointB + ",-15)"})
+            .attr("dy", ".71em")
+            .style("text-anchor","Start")
+            .text(function(d) { return "@realDonaldTrump"});
+
+
+    // DRAW BARS
+    leftBarGroup.selectAll('.bar.left')
+      .data(tokenData)
+      .enter().append('rect')
+      .transition().duration(1000)
+        .attr('class', 'bar left')
+        .attr('x', 0)
+        .attr('y', function(d) { return yScale(d.group); })
+        .attr('width', function(d) { return xScale(d.joebiden); })
+        .attr('height', yScale.bandwidth());
+
+    rightBarGroup.selectAll('.bar.right')
+      .data(tokenData)
+      .enter().append('rect')
+      .transition().duration(1000)
+        .attr('class', 'bar right')
+        .attr('x', 0)
+        .attr('y', function(d) { return yScale(d.group); })
+        .attr('width', function(d) { return xScale(d.donaldTrump); })
+        .attr('height', yScale.bandwidth());
+
+        // console.log('updated')
+
+        //  ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- -------------------
+
+
+        var dateformat = "dd/mm/yyyy";
+        var datafloor = "min";
+
+        var label1 = $('#legendtext1 p').html('@JoeBiden');
+        var label2 = $('#legendtext2 p').html('@realDonaldTrump');
+
+  $('p:empty').remove();
+
+  $('.graphic-legend__legendtext').each(function(d) {
+
+    if ( $(this).children().length > 1 ) {
+       $(this).css('display','inline-block');
+    };
+
+  });
+
+
+        var margin2 = {top: 50, right: 25, bottom: 40, left: 70}
+            width2 = parseInt(d3.select("#svg-container2").style("width")) - margin2.left - margin2.right;
+            height2 = parseInt(d3.select("#svg-container2").style("height")) - margin2.top - margin2.bottom;
+            
+        var groupingNames = d3.keys(timelinedata[0]).filter(function(key) { return key !== "date";
+          });
+
+          if (d3.max(timelinedata, function(d) { return d.value2; }) == "") {
+            groupingNames = groupingNames.filter(function(e) { return e !== 'value2' })
+          };
+
+
+
+        if (dateformat === 'dd/mm/yyyy') {var parseDate = d3.timeParse("%d/%m/%Y");}
+        else if (dateformat === 'mm/yyyy') {var parseDate = d3.timeParse("%m/%Y");}
+        else if (dateformat === 'yyyy') {var parseDate = d3.timeParse("%Y");};
+
+
+        var formatTimeDay = d3.timeFormat("%b %e, %Y");
+        var formatTimeMonth = d3.timeFormat("%b %Y");
+        var formatTimeYear = d3.timeFormat("%Y");
+
+        var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+        var x = d3.scaleTime()
+            .range([0, width2]);
+
+        var y = d3.scaleLinear()
+            .range([height2, 0]);
+
+
+
+        var colour = d3.scaleOrdinal()
+                .range(["#0478BC","#CC3517","#CC3311","#009988","#882255","#EE8833"]);
+
+
+        d3.selectAll(".graphic-legend__legendtext__box").style("background-color", function(d) { return colour(this.id);} );
+
+        // timelinedata.forEach(function(d) {
+        //     d.date = parseDate(d.date);
+        //   });
+
+        var valueline = d3.line()
+            .defined(function (d) { return d.variable !== ""; })
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.variable); });
+
+
+        // var chart = d3.select("#chart2")
+        var chart2 = d3.select('#svg-container2').append('svg')
+            .attr("id", "chart2")
+            .attr("width", width2 + margin2.left + margin2.right)
+            .attr("height", height2 + margin2.top + margin2.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+
+        var categories = groupingNames.map(function(name) {
+            return {
+              name: name,
+              values: timelinedata.map(function(d) {
+                return {date: d.date, variable: d[name] && +d[name]};
+              })
+            };
+          });
+
+        // console.log(categories)
+
+
+          function sortByDateAscending(a, b) {
+            return a.date - b.date;
+          }
+
+          timelinedata = timelinedata.sort(sortByDateAscending);
+
+          x.domain(d3.extent(timelinedata, function(d) { return d.date; }));
+
+          if (datafloor == "min") { firstdata = d3.min(categories, function(c) { return d3.min(c.values, function(v) { return v.variable; }); }); }
+          else {firstdata = datafloor};
+
+          y.domain([firstdata,d3.max(categories, function(c) { return d3.max(c.values, function(v) { return v.variable; }); })]).nice();
+
+          chart2.append("g")
+                .attr("class", "t axis");
+
+          chart2.append("g")
+              .attr("class", "x axis");
+
+          chart2.append("g")
+              .attr("class", "y axis")
+              .append("text")
+                .attr("class", "axislabel")
+                .attr("transform", "translate(-68,-30)")
+                .attr("dy", ".71em")
+                .style("text-anchor","start")
+                .text(function(d) { return "Total tweets"})
+                
+
+          var categories = chart2.selectAll(".categories")
+            .data(categories)
+            .enter().append("g")
+            .attr("class","g");
+
+          categories.append("path")
+            .attr("class", "line")
+            .attr("d", function(d) { return valueline(d.values); })
+            .style("stroke", function(d) { return colour(d.name); });
+
+          var focus = chart2.append("g") 
+            .style("display", "none");
+
+          focus.append("line")
+                .attr("class", "positionline")
+                .style("stroke", "#0073ba")
+                .style("stroke-dasharray", "3,5")
+                .style("opacity", 0.5)
+                .attr("y1", height);
+
+          focus.append("circle")
+                .attr("class", "c")
+                .attr("r", 6);
+
+          focus.append("circle")
+                .attr("class", "cd")
+                .attr("r", 6);
+
+          focus.append("rect")
+                .attr("class", "backingbox");
+
+          focus.append("text")
+                .attr("class", "y1");
+
+          focus.append("text")
+                .attr("class", "y2");
+
+          focus.append("text")
+                .attr("class", "y3");
+
+
+
+          chart2.append("rect")
+                .attr("id", "hoverbox")
+                .style("fill", "none")
+                .style("pointer-events", "all")
+                .on("mouseover", function() { focus.style("display", null); })
+                .on("mouseout", function() { focus.style("display", "none"); })
+                .on("mousemove", mousemove)
+                .on("click", mousemove);
+
+          if (groupingNames.length > 2 ) {
+           $("#hoverbox").css("display","none");
+          }
+          else {
+            $(".graphic-legend").css("display","none");
+          }
+
+            
+
+
+
+        //  ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- ------------------- -------------------
+
+
+ 
+      $('.filterButton-group .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+        var thisKey = theId + '_mentions';
+        // thetoken = thisKey;
+
+        // console.log("id is: " + theId + " | the class is: " + theClass+ " | the key is: " + thisKey)
+
+        //cange these to the biden data set
+
+        tokenMath(thisKey)
+        getTimelineData(thisKey)
+            // create the bars
+
+            // add the numbers/labels
+
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        theId = theId.toUpperCase();
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+
+        updateData();
+
+       
+        resize();
+
+      });
+
+
+
+
+      $('.filterParties .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+
+        // console.log(".guideline ." + theId)
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+        // $( ".guideline." + theId ).show(500);
+
+        // $( '".guideline .' + theId + '"').show(500);
+
+        // d3.selectAll( ".guideline" )
+        // // .hasClass( theClass )
+
+        //   .classed( "hidden", true )
+        iframeRsize();
+
+      });
+
+
+      // ** Update data section (Called from the onclick)
+function updateData() {
+      maxValue = Math.max(
+        d3.max(tokenData, function(d) { return d.joebiden; }),
+        d3.max(tokenData, function(d) { return d.donaldTrump; })
+      );
+
+      xScale = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([0, regionWidth])
+        .nice();
+
+      xScaleLeft = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([regionWidth, 0]);
+
+      xScaleRight = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([0, regionWidth]);
+
+      yScale = d3.scaleBand()
+        .domain(tokenData.map(function(d) { return d.group; }))
+        // .range([height,0], 0.1);
+        .rangeRound([height,0], 0.1)
+        .padding(0.3);
+
+
+      yAxisLeft.transition().duration(1000)
+                .call(d3.axisRight(yScale)
+                    .ticks(4,0)
+                    );
+
+      yAxisRight.transition().duration(1000)
+                .call(d3.axisLeft(yScale)
+                    .ticks(4,0)
+                    // .tickSize(width)
+                    .tickPadding(margin.middle-4)
+                    .tickFormat('')
+                    );
+
+      xAxisRight.transition().duration(1000)
+                .call(d3.axisBottom(xScaleLeft)
+                    .ticks(ticks)
+                  );
+
+      xAxisLeft.transition().duration(1000)
+                .call(d3.axisBottom(xScaleRight)
+                    .ticks(ticks)
+                  );
+
+
+
+      // DRAW BARS
+      leftBarGroup.selectAll('.bar.left')
+        .data(tokenData)
+        .transition().duration(1000)
+        // .enter().append('rect')
+          // .attr('class', 'bar left')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.joebiden); })
+          .attr('height', yScale.bandwidth());
+
+      rightBarGroup.selectAll('.bar.right')
+        .data(tokenData)
+        .transition().duration(1000)
+        // .enter().append('rect')
+          // .attr('class', 'bar right')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.donaldTrump); })
+          .attr('height', yScale.bandwidth());
+
+
+          /// TIMELINE UPDATE
+
+
+
+          var width2 = parseInt(d3.select("#chart2").style("width")) - margin2.left - margin2.right;
+              height2 = parseInt(d3.select("#chart2").style("height")) - margin2.top - margin2.bottom;
+
+              if (width < 300) {
+                var tickVals = [data[0].date,data[Math.floor(data.length/2)].date,data[data.length-1].date];
+              } else {
+                var tickVals = null;
+              }
+
+          /* Update the range of the scale with new width/height */
+          x.range([0, width2]);
+          y.range([height2, 0]);
+
+
+          // timelinedata.forEach(function(d) {
+          //     d.date = parseDate(d.date);
+          //   });
+
+
+        var categories = groupingNames.map(function(name) {
+            return {
+              name: name,
+              values: timelinedata.map(function(d) {
+                return {date: d.date, variable: d[name] && +d[name]};
+              })
+            };
+          });
+
+
+          timelinedata = timelinedata.sort(sortByDateAscending);
+
+          x.domain(d3.extent(timelinedata, function(d) { return d.date; }));
+
+          if (datafloor == "min") { firstdata = d3.min(categories, function(c) { return d3.min(c.values, function(v) { return v.variable; }); }); }
+          else {firstdata = datafloor};
+
+          y.domain([firstdata,d3.max(categories, function(c) { return d3.max(c.values, function(v) { return v.variable; }); })]).nice();
+
+
+          chart2.select('#chart2 .x.axis')
+          .data(timelinedata)
+            .transition().duration(1000)
+            .attr("transform", "translate(0," + height2 + ")")
+            .call(d3.axisBottom(x)
+              .tickSize(8)
+              .tickSizeOuter(0)
+              .tickPadding(10)
+              .ticks(Math.max(width2/100, 2))
+              .tickValues(tickVals)
+              .tickFormat(
+                  function(d, i) {
+
+                  if (dateformat == "yyyy" ) {return formatTimeYear(d) }
+
+                  else if (d3.timeYear(d) < d && dateformat == "dd/mm/yyyy" && i > 0) { return d3.timeFormat('%b %e')(d); }
+
+                  else if (dateformat == "dd/mm/yyyy") { return d3.timeFormat('%b %e' + ", '" + '%y')(d); }
+
+                  else if (d3.timeYear(d) < d && i > 0) { return d3.timeFormat('%b')(d); }
+
+                  else {return d3.timeFormat('%b' + " '" + '%y')(d);};
+              })
+            );
+
+
+            chart2.select("#chart2 .y.axis")
+          .data(timelinedata)
+              .transition().duration(1000)
+             .call(d3.axisLeft(y)
+              .ticks(6)
+              .tickPadding(8)
+              .tickFormat(
+                function(d) {
+                  return d3.format(",")(d)
+                }))
+
+           chart2.select("#chart2 .t.axis")
+          .data(timelinedata)
+              .transition().duration(1000)
+              .attr("transform", "translate(" + width2 + " ,0)")
+              .call(d3.axisLeft(y)
+                  .ticks(6)
+                  .tickSize(width2)
+                  );
+
+
+
+          chart2.select('#hoverbox')
+              .attr("width", width2 + margin2.right)
+              .attr("height", height2);
+
+          /* Force D3 to recalculate and update the line */
+          chart2.selectAll('.line')
+          .data(categories)
+              .transition().duration(1000)
+            .attr("d", function(d) { return valueline(d.values); })
+
+          // console.log('updated')
+
+
+  }
+
+  function resize() {
+  
+    updateData()
+    iframeResize();
+   
+  }
+
+  function mousemove() {
+    var x0 = x.invert(d3.mouse(this)[0]),
+        i = bisectDate(timelinedata, x0, 1),
+        d0 = timelinedata[i - 1],
+        d1 = timelinedata[i],
+        d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+    
+    focus.select("text.y1")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             -30 + ")")
+        .text(function() { 
+          if (dateformat == "dd/mm/yyyy" ) {return formatTimeDay(d.date) }
+          if (dateformat == "mm/yyyy" ) {return formatTimeMonth(d.date) }
+          if (dateformat == "yyyy" ) {return formatTimeYear(d.date) }
+        })
+        .style("text-anchor", function() {
+          if (x(d.date) > width2-150  ) {return "end"}
+          else {return "start"};
+      });
+
+    focus.select("text.y2")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             -15 + ")")
+        .text(function() { 
+          return "@JoeBiden: " + d3.format(',')(d.value1) 
+        })
+        .style("text-anchor", function() {
+          if (x(d.date) > width2-150  ) {return "end"}
+          else {return "start"};
+      });
+
+    focus.select("text.y3")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             0 + ")")
+        .text(function() { 
+          return "@realDonaldTrump: " + d3.format(',')(d.value2) 
+        })
+        .style("text-anchor", function() {
+          if (x(d.date) > width2-150  ) {return "end"}
+          else {return "start"};
+      });
+
+    focus.select("circle.c")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             y(d.value1) + ")");
+
+    focus.select("circle.cd")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             y(d.value2) + ")");
+
+    focus.select(".positionline")
+        .attr("transform",
+              "translate(" + x(d.date) + "," +
+                             ((height2 * -1) - 5) + ")")
+                   .attr("y2", height2 + height2);
+
+    focus.select(".backingbox")
+         // .attr("transform",
+              // "translate(" + (x(d.date)-5) + "," +
+                             // -45 + ")")
+         .attr("transform", function() {
+          if (x(d.date) > width2-150  ) {
+            return "translate(" + (x(d.date)-200) + "," +
+                             -45 + ")"
+          }
+          else {
+            return "translate(" + (x(d.date)-5) + "," +
+                             -45 + ")"
+          };
+         })
+         .attr("width",200)
+         .attr("height",50)
+         .style("fill","#f8f8f8");
+  }
+
+
+
+
+
+      $('#burgerMenu').on('click', function(){
+        // console.log(this);
+        iframeRsize();
+      });
+
+
+    d3.select(window).on('resize', resize);
+    d3.select(window).on('load', resize);
+    resize();
+
+
+
+        }); //end of biden
+      
+      }); //end of trump
+
+
+
+
+
+      iframeResize();
+
+
+    // });  
+
+    function iframeResize() {
+        var message = {
+            'resize': {
+                'iframe': 'tweet-mention-timeline-iframe',
+                'height': document.getElementsByClassName('graphic-wrapper')[0].offsetHeight
+            }
+        };
+        parent.postMessage(message, "*");
+      };
+
+      
+
+
+    </script>
+
+    <!-- <script src="https://spreadsheets.google.com/feeds/list/1b2aOh0InzkTq6ikLi6DgL_ijFUPIP3wkJnK4ZY7wFKU/1/public/values?alt=json-in-script&callback=getJsonFromGoogle"></script> -->
+
+
+    <!-- <style>#return-to-school-iframe{padding:0;width:100%;border:0;overflow:hidden;} </style><iframe id="return-to-school-iframe" src="https://misc.thestar.com/interactivegraphic/2020/08-august/25-back-to-school-covid-guidelines/index.html" scrolling="no" height="1000"></iframe> -->
+
+
+</body>
+</html>

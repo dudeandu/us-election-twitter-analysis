@@ -1,0 +1,55 @@
+
+DATE IS YYYYMMDD
+
+
+TRUMP COMMANDS
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359"}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMxMTM3NzM4MTA3Mjk2MTU0MX0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-2.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMxMDc2OTA2MjI2NDMwNzcxNX0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-3.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMwOTQ5NTgyMTAxNzE5NDQ5Nn0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-4.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMwODc5ODg4MTI2NjkxMzI4MX0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-5.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:realDonaldTrump", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMwODc5ODg4MTI2NjkxMzI4MX0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-6.json
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------// 
+
+BIDEN COMMANDS
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:JoeBiden", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359"}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:JoeBiden", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMxMDQwMDg0NTk4OTc2OTIxNn0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-2.json
+
+
+curl  "https://api.twitter.com/1.1/tweets/search/fullarchive/Testtesttest.json?" -d '{"query":"from:JoeBiden", "maxResults":"100","fromDate":"202009210000","toDate":"202010042359","next":"eyJtYXhJZCI6MTMxMDQwMDg0NTk4OTc2OTIxNn0="}' -H "Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAE0K%2FwAAAAAAv6fBw%2BUOnecbE0jNuciU3unuIaY%3D0ZORnyMPTVOlNWZRtLHc6rTpr48txVkXYAVnqJGw3xmRAG1jl2" -o output-3.json
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

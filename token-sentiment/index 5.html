@@ -1,0 +1,992 @@
+<!-- Attempting to build a piramid chart / DONE-->
+<!-- NEEDS TRANSITIONS-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Toronto Star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://misc.thestar.com/interactivegraphic/libraries/d3v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/cta-style.css">
+<style>
+
+body {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+	}
+
+.clearfix:after {
+    visibility: hidden;
+    display: none;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    }
+    
+.clearfix {
+    display: block;
+    }
+
+.graphic-wrapper {
+  margin: 0 auto;
+  /*max-width: 592px; */
+}
+
+.graphic {
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+
+  max-width: 1030px; 
+  margin: 0 auto;
+
+}
+
+.graphic-top {
+  padding: 8px 0; 
+  margin:0 auto;
+  max-width: 592px; }
+  @media (min-width: 526px) {
+    .graphic-top {
+      padding: 12px 0; } }
+  @media (min-width: 592px) {
+    .graphic-top {
+      padding: 16px 0; } }
+
+h2.graphic-top__graphic-hed {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #333;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 4px; }
+  @media (min-width: 526px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 22px; } }
+  @media (min-width: 592px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 24px; } }
+
+h3.graphic-top__graphic-dek {
+  font-size: 16px;
+  line-height: 1.3em;
+  font-weight: 400;
+  margin: 0;
+  font-family: "TorstarTextO3", Times, serif;
+  color: #666;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 18px; } }
+
+
+  .graphic-top__graphic-instructions {
+    margin:4px auto 0;
+    max-width: 592px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2em;
+    font-weight: 400;
+    font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+    color: #999;
+    font-style: italic; }
+    @media (min-width: 620px) {
+      .graphic-top__graphic-instructions {
+        font-size: 13px; } }
+    @media (min-width: 849px) {
+      .graphic-top__graphic-instructions {
+        font-size: 14px; } }
+    .graphic-top__graphic-instructions__desktopspan {
+      display: none;
+    }
+     @media (min-width: 849px) {
+       .graphic-top__graphic-instructions__desktopspan {
+        display: inline; }
+         .graphic-top__graphic-instructions__mobilespan {
+        display: none; } 
+      }
+
+.graphic-bottom {
+  margin: 12px 0 0;
+  padding: 6px 0 16px;
+  border-top: 1px solid #cfcfcf; 
+  margin:0 auto;
+  max-width: 592px; }
+  .graphic-bottom:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0; }
+  @media (min-width: 526px) {
+    .graphic-bottom {
+      padding-top: 7px; } }
+  @media (min-width: 592px) {
+    .graphic-bottom {
+      padding-top: 8px; } }
+
+p.graphic-bottom__graphic-source {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-source {
+      max-width: 65%;
+      vertical-align: top;
+      float: left; } }
+p.graphic-bottom__graphic-byline {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-byline {
+      text-align: right;
+      max-width: 50%;
+      vertical-align: top;
+      float: right; } }
+p.graphic-bottom__notetext {
+  margin: 0;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.3em;
+  padding-bottom: 8px;
+  color: #666;
+  font-family: "TorstarTextO3", Times, serif;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__notetext {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    p.graphic-bottom__notetext {
+      font-size: 18px; } }
+
+
+      .interactive-graphic-cta.interactive-graphic-cta__desktop {
+        margin: 0;
+      }
+
+
+
+/*----------------------------------------PROJECT CSS START ----------------------------------------*/
+
+.filterBox{
+  width: 100%;
+  /*border: 1px solid red;*/
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filterParties{
+  /*float: left;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin:10px auto;
+  /*flex-basis: 25%;*/
+  /*border: 1px dashed green;*/
+}
+
+.filterIntroText{
+  flex-basis: 100%;
+  text-align: left;
+  font-size: 1.1em;
+  font-weight: 200;
+  color: #808080;
+  padding: 5px 0; 
+
+}
+
+.filterButton-group{
+  /*float: right;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  /*flex-basis: 25%;*/
+  margin-top: 10px;
+}
+
+.filterButton{
+  /*height: 30px;*/
+  flex-grow: 1;
+  float: none;
+}
+
+.filterButton-category{
+  /*height: 30px;*/
+  /*background-color: whitesmoke;*/
+  margin: 1px;
+  /*border: 1px solid #808080;*/
+  border-radius: 10px;
+  float: none;
+}
+
+.filterButton-token{
+  height: 30px;
+  background-color: whitesmoke;
+  margin: 1px;
+  border: 1px solid #808080;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.filterButton-group .filterButton{
+  padding: 8px 8px 0;
+  /*flex-basis: 49%;*/
+}
+
+.filterParties .filterButton{
+  flex-basis: 17%;
+  text-transform: uppercase;
+  padding: 3px 3px 3px;
+}
+
+@media all and (max-width: 422px) {
+    .filterParties .filterButton{
+      /*flex-basis: 49.5%;*/
+    }
+  }
+
+.selected {
+  pointer-events: none;
+  /*color: #f8f8f8;*/
+  color: #dddddd;
+}
+
+#ndp.selected {
+  /*background-color: #f8A337;*/
+}
+
+#con.selected {
+  /*background-color: #19547E;*/
+}
+
+#lib.selected {
+  /*background-color: #DA3037;*/
+}
+
+#gre.selected {
+  /*background-color: #4DA659;*/
+}
+
+.filterButton-group .selected{
+  background-color: dimgray;
+  color: #f8f8f8;
+}
+
+.filterButton:hover {
+  /*background-color: darkgray;*/
+  background-color: #BADA55;
+  cursor: pointer;
+}
+
+.filterButton.selected:hover {
+  background-color: dimgray;
+  pointer-events: none;
+}
+
+
+.guidelineBox {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+}
+
+#menuLabel{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.3em;
+
+  cursor: pointer;
+  background-color: #f8f8f8;
+  padding: 7px 6px 6px;
+}
+
+#burgerMenu, #menuLabel{
+  display: none;
+}
+
+input#burgerMenu {
+    display: none;
+}
+
+.fa-times{
+  display: none;
+}
+
+input#burgerMenu:checked +label .fa-bars {
+    display: none;
+}
+
+input#burgerMenu:checked +label .fa-times {
+    display: inline;
+}
+
+
+
+.filterMenu{
+  /*position: absolute;*/
+  /*top: 0;*/
+  z-index: 10;
+
+  /*writing-mode: vertical-rl;*/
+  text-orientation: upright;
+}
+
+@media all and (max-width: 422px) {
+  .guidelineBox {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+.guideline {
+  /*display: block;*/
+  /*height: 100px;*/
+  flex-basis: 49.5%;
+  margin-bottom: 2px;
+  border: 0.5px solid #EEE;
+  /*border-top: 1px solid #CCC;*/
+  overflow: hidden;
+  padding: 10px;
+  color: #333;
+}
+
+@media all and (max-width: 580px) {
+  .guideline {
+  flex-basis: 49.5%;
+  }
+}
+
+@media all and (max-width: 422px) {
+  .guideline {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+.guideline:hover {
+  background-color: #e8e8e8;
+  cursor: pointer;
+  border-bottom: 1px solid darkgray;
+  border-right: 1px solid darkgray;
+  border-top: 1px solid #e8e8e8;
+}
+
+.guideline:hover .moreLess{
+  color: black;
+}
+
+.guideline h4 {
+  margin: 3px 0 0;
+}
+
+.boardTitle{
+  font-weight: 600;
+
+}
+
+.contentLarge {
+  display: none;
+}
+
+.guideline p {
+  margin: 5px 0 0;
+}
+
+.party {
+  border-left: 4px solid;
+  padding-left: 5px;
+}
+
+
+.guideline .party {
+  border-color: #82a710;
+
+}
+
+.categoryLogos {
+  background-size: cover;
+  width: 80px;
+  height: 80px;
+  /*display: inline-block;*/
+  margin: 0 auto;
+  padding: 0;
+  vertical-align: text-bottom;
+}
+
+
+/*------------------------         -------------------------------*/
+
+.baselineShift{
+  position: relative;
+  top:1px;
+}
+
+h4.category {
+  /*color: #BADA55;*/
+  color: #82a710;
+}
+
+.hidden {
+  display: none;
+}
+
+.showText {
+  display: block;
+}
+
+
+@media all and (max-width: 580px) {
+}
+
+@media all and (max-width: 422px) {
+  .filterBox {
+    top:0;
+    padding: 2px;
+    background-color: #f8f8f8;
+    /*background-color: green;*/
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  input#burgerMenu:checked ~ .filterBox {
+    max-height: 100%;
+  }
+
+  #burgerMenu, #menuLabel{
+    display: block;
+  }
+
+  .filterMenu{
+    padding: 10px 5px 5px;
+    /*position: -webkit-sticky; /* Safari */*/
+    top:0px;
+    /*position: sticky;*/
+    visibility: visible;
+  }
+
+  .guidelineBox {}
+
+  .guidelineBox{
+    /*margin-top: 400px;*/
+  }
+
+}
+
+#svg-container {
+  margin: 0 auto;
+}
+
+svg {
+  /*border: 1px solid #ccc;*/
+}
+
+.axis line,
+.axis path {
+  shape-rendering: crispEdges;
+  fill: transparent;
+  stroke: #555;
+}
+.axis text {
+  font-size: 11px;
+}
+
+
+.bar {
+  /*fill-opacity: 0.5;*/
+}
+.bar.left {
+  /*fill: steelblue;*/
+  fill: #0478BC;
+}
+.bar.right {
+  /*fill: firebrick;*/
+  fill: #CC3517;
+}
+
+
+
+
+/*----------------------------------------PROJECT CSS END ----------------------------------------*/
+
+
+
+</style>
+</head>
+
+
+
+
+<body>
+  <div class="graphic-wrapper return-to-school-wrapper">
+    <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Words token emotion tk</h2>
+        <h3 class="graphic-top__graphic-dek">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra libero sit amet sem aliquet auctor. Maecenas tincidunt nisl non ante dictum joebidensuada. Curabitur accumsan eros a libero ultrices, et aliquet arcu dictum. Nunc ut tellus vel tortor tincidunt semper eu at ipsum. Quisque volutpat aliquet mi a convallis. Proin eget convallis sapien. Suspendisse convallis porttitor lorem sit amet tempor. Curabitur et ante sem. Nam eget mauris eget turpis auctor convallis a ut purus. Maecenas quis ornare nisl. Duis quis massa at ligula hendrerit iaculis. Cras varius eleifend viverra.</h3>
+    </div>
+
+    <div class="graphic">
+
+<!-- ----------------------------------------PROJECT HTML START ----------------------------------------  -->
+      <div class="filterMenu"><input type="checkbox" id="burgerMenu"><label for="burgerMenu" id="menuLabel">Filters <i class="fas fa-bars"></i> <i class="fas fa-times"></i></label>
+       
+        <div class="filterBox clearfix">
+
+        <h3 class="graphic-top__graphic-instructions">
+          <span class="interactive-graphic-cta interactive-graphic-cta__desktop"><img height="23px" class="interactive-graphic-cta-image" src="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/SVG/Tap.svg"></span>
+          <span class="graphic-top__graphic-instructions__desktopspan">Click</span><span class="graphic-top__graphic-instructions__mobilespan">Tap</span> on the buttons to display emotion results. </h3>
+          
+
+
+            <div class="filterButton-group">
+              <!-- <div class="filterIntroText">Choose a word</div> -->
+              <div class="filterButton filterButton-token selected" id="america">america</div>
+              <div class="filterButton filterButton-token" id="elections">elections</div>
+              <div class="filterButton filterButton-token" id="joe">joe</div>
+              <div class="filterButton filterButton-token" id="ballots">ballots</div>
+              <div class="filterButton filterButton-token" id="country">country</div>
+              <div class="filterButton filterButton-token" id="trump">trump</div>
+              <div class="filterButton filterButton-token" id="democrat">democrat</div>
+              <div class="filterButton filterButton-token" id="republicans">republican</div>
+              <div class="filterButton filterButton-token" id="maga">maga</div>
+              <div class="filterButton filterButton-token" id="canada">canada</div>
+              <div class="filterButton filterButton-token" id="black">black</div>
+              <div class="filterButton filterButton-token" id="industry">industry</div>
+              <div class="filterButton filterButton-token" id="hispanic">hispanic</div>
+              <div class="filterButton filterButton-token" id="covid">covid</div>
+              <div class="filterButton filterButton-token" id="virus">virus</div>
+              <div class="filterButton filterButton-token" id="health">health</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+            </div>
+        </div>
+      </div>
+
+      <div id="svg-container">
+        <!-- <svg id="democrat-chart"></svg> -->
+        <!-- <svg id="republican-chart"></svg> -->
+      </div>
+
+
+
+
+      <div class="guidelineBox clearfix">
+
+
+      </div>
+<!-- ----------------------------------------PROJECT HTML END ---------------------------------------- -->
+      
+
+    </div>
+
+    <div class="graphic-bottom">
+        <!-- <p class="graphic-bottom__notetext" id="notetext">Note here lore</p> -->
+        <!-- <p class="graphic-bottom__graphic-source" id="source">Source: TKTK</p> -->
+        <p class="graphic-bottom__graphic-byline" id="byline">Andres Plana/ Star graphic</p>
+    </div>
+  </div>
+
+
+
+
+
+    <script>
+
+    var trump_df = []; 
+    var biden_df = [];
+
+    var results = {
+      mentions_dem: 0,
+      pos_dem: 0,
+      neg_dem: 0,
+      mentions_rep: 0,
+      pos_rep: 0,
+      neg_rep: 0
+    }
+
+    var tokenData = [];
+
+
+    function tokenMath(token) {
+      results = {
+        mentions_dem: 0,
+        pos_dem: 0,
+        neg_dem: 0,
+        mentions_rep: 0,
+        pos_rep: 0,
+        neg_rep: 0
+      }
+
+      for ( var i = 0; i < trump_df.length; i++) {
+        if ( trump_df[i][token] == 'TRUE' ) {
+          // console.log(i + 2, trump_df[i].full_tweet_text)
+          // Add totals
+          results.mentions_rep += 1
+          results.pos_rep = results.pos_rep + Number(trump_df[i].positive)
+          results.neg_rep = results.neg_rep + Number(trump_df[i].negative)
+        }
+      }
+
+      for ( var i = 0; i < biden_df.length; i++) {
+        if ( biden_df[i][token] == 'TRUE' ) {
+          // console.log(i + 2, biden_df[i].full_tweet_text)
+          // Add totals
+          results.mentions_dem += 1
+          results.pos_dem = results.pos_dem + Number(biden_df[i].positive)
+          results.neg_dem = results.neg_dem + Number(biden_df[i].negative)
+        }
+      }
+      // console.log(results)
+
+      tokenData = [
+        // {group: 'Total Tweets', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+        {group: 'Percentage', joebiden: results.mentions_dem/biden_df.length*100, donaldTrump: results.mentions_rep/trump_df.length*100},
+        {group: 'Negative', joebiden: results.neg_dem, donaldTrump: results.neg_rep},
+        {group: 'Positive', joebiden: results.pos_dem, donaldTrump: results.pos_rep},
+        {group: 'Mentions', joebiden: results.mentions_dem, donaldTrump: results.mentions_rep},
+      ];
+      console.log(tokenData)
+    }
+
+
+
+
+
+      // so sick of string concatenation for translations
+      function translation(x,y) {
+        return 'translate(' + x + ',' + y + ')';
+      }
+
+    //--------------------------------------------------------------- svg setup
+      // SET UP DIMENSIONS
+      var width = parseInt(d3.select('#svg-container').style('width')),
+          height = 300;
+          
+      // margin.middle is distance from center line to each y-axis
+      var margin = {
+        top: 20,
+        right: 20,
+        bottom: 24,
+        left: 20,
+        middle: 50
+      };
+          
+      // the width of each side of the chart
+      var regionWidth = width/2 - margin.middle;
+
+      // these are the x-coordinates of the y-axes
+      var pointA = regionWidth,
+          pointB = width - regionWidth;
+
+
+      // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
+      var totalPopulation = d3.sum(tokenData, function(d) { return d.joebiden + d.donaldTrump; }),
+          percentage = function(d) { return d / totalPopulation; };
+        
+      // console.log(totalPopulation, percentage)
+
+
+    d3.csv('data/trump.csv',function(trumpdata){
+      trumpdata.forEach(function(d,i){
+        trump_df.push(d);
+      })
+        // console.log(trump_df)
+      d3.csv('data/biden.csv',function(bidendata){
+        bidendata.forEach(function(d,i){
+          biden_df.push(d);
+        })
+
+        // console.log(biden_df)
+
+    tokenMath('america_mentions')
+    updateData();
+
+ 
+      $('.filterButton-group .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+        var thisKey = theId + '_mentions';
+
+        // console.log("id is: " + theId + " | the class is: " + theClass+ " | the key is: " + thisKey)
+
+        //cange these to the biden data set
+
+        tokenMath(thisKey)
+            // create the bars
+
+            // add the numbers/labels
+
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        theId = theId.toUpperCase();
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+
+        updateData();
+
+       
+        resize();
+
+      });
+
+
+
+
+      $('.filterParties .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+
+        // console.log(".guideline ." + theId)
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+        // $( ".guideline." + theId ).show(500);
+
+        // $( '".guideline .' + theId + '"').show(500);
+
+        // d3.selectAll( ".guideline" )
+        // // .hasClass( theClass )
+
+        //   .classed( "hidden", true )
+        resize();
+
+      });
+
+
+      // ** Update data section (Called from the onclick)
+function updateData() {
+
+      d3.select('#svg-container').html('')
+
+        
+      // CREATE SVG
+      var svg = d3.select('#svg-container').append('svg')
+        .attr('width', margin.left + width + margin.right)
+        .attr('height', margin.top + height + margin.bottom)
+        // ADD A GROUP FOR THE SPACE WITHIN THE MARGINS
+        .append('g')
+          .attr('transform', translation(margin.left, margin.top));
+
+
+      var maxValue = Math.max(
+        d3.max(tokenData, function(d) { return d.joebiden; }),
+        d3.max(tokenData, function(d) { return d.donaldTrump; })
+      );
+
+      // SET UP SCALES
+        
+      // the xScale goes from 0 to the width of a region
+      //  it will be reversed for the left x-axis
+      var xScale = d3.scale.linear()
+        .domain([0, maxValue])
+        .range([0, regionWidth])
+        .nice();
+
+      var xScaleLeft = d3.scale.linear()
+        .domain([0, maxValue])
+        .range([regionWidth, 0]);
+
+      var xScaleRight = d3.scale.linear()
+        .domain([0, maxValue])
+        .range([0, regionWidth]);
+
+      var yScale = d3.scale.ordinal()
+        .domain(tokenData.map(function(d) { return d.group; }))
+        .rangeRoundBands([height,0], 0.1);
+
+
+      // SET UP AXES
+      var yAxisLeft = d3.svg.axis()
+        .scale(yScale)
+        .orient('right')
+        .tickSize(4,0)
+        .tickPadding(margin.middle-4);
+
+      var yAxisRight = d3.svg.axis()
+        .scale(yScale)
+        .orient('left')
+        .tickSize(4,0)
+        .tickFormat('');
+
+      var xAxisRight = d3.svg.axis()
+        .scale(xScale)
+        .orient('bottom')
+        .tickFormat(d3.format(',.0f'));
+
+      var xAxisLeft = d3.svg.axis()
+        // REVERSE THE X-AXIS SCALE ON THE LEFT SIDE BY REVERSING THE RANGE
+        .scale(xScale.copy().range([pointA, 0]))
+        .orient('bottom')
+        .tickFormat(d3.format(',.0f'));
+
+      // MAKE GROUPS FOR EACH SIDE OF CHART
+      // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
+      var leftBarGroup = svg.append('g')
+        .attr('transform', translation(pointA, 0) + 'scale(-1,1)');
+      var rightBarGroup = svg.append('g')
+        .attr('transform', translation(pointB, 0));
+
+      // DRAW AXES
+      svg.append('g')
+        .attr('class', 'axis y left')
+        .attr('transform', translation(pointA, 0))
+        .call(yAxisLeft)
+        .selectAll('text')
+        .style('text-anchor', 'middle');
+
+      svg.append('g')
+        .attr('class', 'axis y right')
+        .attr('transform', translation(pointB, 0))
+        .call(yAxisRight);
+
+      svg.append('g')
+        .attr('class', 'axis x left')
+        .attr('transform', translation(0, height))
+        .call(xAxisLeft);
+
+      svg.append('g')
+        .attr('class', 'axis x right')
+        .attr('transform', translation(pointB, height))
+        .call(xAxisRight);
+
+      // DRAW BARS
+      leftBarGroup.selectAll('.bar.left')
+        .data(tokenData)
+        // .transition().duration(1000)
+        .enter().append('rect')
+          .attr('class', 'bar left')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.joebiden); })
+          .attr('height', yScale.rangeBand());
+
+      rightBarGroup.selectAll('.bar.right')
+        .data(tokenData)
+        // .transition().duration(1000)
+        .enter().append('rect')
+          .attr('class', 'bar right')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.donaldTrump); })
+          .attr('height', yScale.rangeBand());
+
+          // console.log('updated')
+
+}
+
+
+
+
+
+      $('#burgerMenu').on('click', function(){
+        // console.log(this);
+        resize();
+      });
+
+
+
+
+
+        }); //end of biden
+      
+      }); //end of trump
+
+
+
+
+
+      resize();
+
+
+    // });
+
+    function resize(){
+        var message = {'resize': 
+                  {
+                    'iframe':'return-to-school-iframe',
+                    'height': document.getElementsByClassName('return-to-school-wrapper')[0].offsetHeight + 20
+                  }
+                };
+       
+        parent.postMessage(message, "*");
+    };
+
+    window.addEventListener('load', function() {
+        resize();
+    });
+
+    window.addEventListener("resize", function(){
+        resize();
+    });
+
+      
+
+
+    </script>
+
+    <!-- <script src="https://spreadsheets.google.com/feeds/list/1b2aOh0InzkTq6ikLi6DgL_ijFUPIP3wkJnK4ZY7wFKU/1/public/values?alt=json-in-script&callback=getJsonFromGoogle"></script> -->
+
+
+    <!-- <style>#return-to-school-iframe{padding:0;width:100%;border:0;overflow:hidden;} </style><iframe id="return-to-school-iframe" src="https://misc.thestar.com/interactivegraphic/2020/08-august/25-back-to-school-covid-guidelines/index.html" scrolling="no" height="1000"></iframe> -->
+
+
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Toronto Star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://misc.thestar.com/interactivegraphic/libraries/d3v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/cta-style.css">
+<style>
+
+body {
+	margin: 0;
+}
+
+* {
+	box-sizing: border-box;
+	}
+
+.clearfix:after {
+    visibility: hidden;
+    display: none;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    }
+    
+.clearfix {
+    display: block;
+    }
+
+.graphic-wrapper {
+  margin: 0 auto;
+  /*max-width: 592px; */
+}
+
+.graphic {
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+
+  max-width: 1030px; 
+  margin: 0 auto;
+
+}
+
+.graphic-top {
+  padding: 8px 0; 
+  margin:0 auto;
+  max-width: 592px; }
+  @media (min-width: 526px) {
+    .graphic-top {
+      padding: 12px 0; } }
+  @media (min-width: 592px) {
+    .graphic-top {
+      padding: 16px 0; } }
+
+h2.graphic-top__graphic-hed {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #333;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 4px; }
+  @media (min-width: 526px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 22px; } }
+  @media (min-width: 592px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 24px; } }
+
+h3.graphic-top__graphic-dek {
+  font-size: 16px;
+  line-height: 1.3em;
+  font-weight: 400;
+  margin: 0;
+  font-family: "TorstarTextO3", Times, serif;
+  color: #666;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 18px; } }
+
+
+  .graphic-top__graphic-instructions {
+    margin:4px auto 0;
+    max-width: 592px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2em;
+    font-weight: 400;
+    font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+    color: #999;
+    font-style: italic; }
+    @media (min-width: 620px) {
+      .graphic-top__graphic-instructions {
+        font-size: 13px; } }
+    @media (min-width: 849px) {
+      .graphic-top__graphic-instructions {
+        font-size: 14px; } }
+    .graphic-top__graphic-instructions__desktopspan {
+      display: none;
+    }
+     @media (min-width: 849px) {
+       .graphic-top__graphic-instructions__desktopspan {
+        display: inline; }
+         .graphic-top__graphic-instructions__mobilespan {
+        display: none; } 
+      }
+
+.graphic-bottom {
+  margin: 12px 0 0;
+  padding: 6px 0 16px;
+  border-top: 1px solid #cfcfcf; 
+  margin:0 auto;
+  max-width: 592px; }
+  .graphic-bottom:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0; }
+  @media (min-width: 526px) {
+    .graphic-bottom {
+      padding-top: 7px; } }
+  @media (min-width: 592px) {
+    .graphic-bottom {
+      padding-top: 8px; } }
+
+p.graphic-bottom__graphic-source {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-source {
+      max-width: 65%;
+      vertical-align: top;
+      float: left; } }
+p.graphic-bottom__graphic-byline {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-byline {
+      text-align: right;
+      max-width: 30%;
+      vertical-align: top;
+      float: right; } }
+p.graphic-bottom__notetext {
+  margin: 0;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.3em;
+  padding-bottom: 8px;
+  color: #666;
+  font-family: "TorstarTextO3", Times, serif;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__notetext {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    p.graphic-bottom__notetext {
+      font-size: 18px; } }
+
+
+      .interactive-graphic-cta.interactive-graphic-cta__desktop {
+        margin: 0;
+      }
+
+
+
+/*----------------------------------------PROJECT CSS START ----------------------------------------*/
+
+.filterBox{
+  width: 100%;
+  /*border: 1px solid red;*/
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filterParties{
+  /*float: left;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin:10px auto;
+  /*flex-basis: 25%;*/
+  /*border: 1px dashed green;*/
+}
+
+.filterIntroText{
+  flex-basis: 100%;
+  text-align: left;
+  font-size: 1.1em;
+  font-weight: 200;
+  color: #808080;
+  padding: 5px 0; 
+
+}
+
+.filterButton-group{
+  /*float: right;*/
+  /*width: 48%;*/
+  display: flex;
+  flex-wrap: wrap;
+  /*flex-basis: 25%;*/
+  margin-top: 10px;
+}
+
+.filterButton{
+  /*height: 30px;*/
+  flex-grow: 1;
+  float: none;
+}
+
+.filterButton-category{
+  /*height: 30px;*/
+  /*background-color: whitesmoke;*/
+  margin: 1px;
+  /*border: 1px solid #808080;*/
+  border-radius: 10px;
+  float: none;
+}
+
+.filterButton-token{
+  height: 30px;
+  background-color: whitesmoke;
+  margin: 1px;
+  border: 1px solid #808080;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.filterButton-group .filterButton{
+  padding: 8px 8px 0;
+  /*flex-basis: 49%;*/
+}
+
+.filterParties .filterButton{
+  flex-basis: 17%;
+  text-transform: uppercase;
+  padding: 3px 3px 3px;
+}
+
+@media all and (max-width: 422px) {
+    .filterParties .filterButton{
+      /*flex-basis: 49.5%;*/
+    }
+  }
+
+.selected {
+  pointer-events: none;
+  /*color: #f8f8f8;*/
+  color: #dddddd;
+}
+
+#ndp.selected {
+  /*background-color: #f8A337;*/
+}
+
+#con.selected {
+  /*background-color: #19547E;*/
+}
+
+#lib.selected {
+  /*background-color: #DA3037;*/
+}
+
+#gre.selected {
+  /*background-color: #4DA659;*/
+}
+
+.filterButton-group .selected{
+  background-color: dimgray;
+  color: #f8f8f8;
+}
+
+.filterButton:hover {
+  /*background-color: darkgray;*/
+  background-color: #BADA55;
+  cursor: pointer;
+}
+
+.filterButton.selected:hover {
+  background-color: dimgray;
+  pointer-events: none;
+}
+
+
+.guidelineBox {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: relative;
+}
+
+#menuLabel{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.3em;
+
+  cursor: pointer;
+  background-color: #f8f8f8;
+  padding: 7px 6px 6px;
+}
+
+#burgerMenu, #menuLabel{
+  display: none;
+}
+
+input#burgerMenu {
+    display: none;
+}
+
+.fa-times{
+  display: none;
+}
+
+input#burgerMenu:checked +label .fa-bars {
+    display: none;
+}
+
+input#burgerMenu:checked +label .fa-times {
+    display: inline;
+}
+
+
+
+.filterMenu{
+  /*position: absolute;*/
+  /*top: 0;*/
+  z-index: 10;
+
+  /*writing-mode: vertical-rl;*/
+  text-orientation: upright;
+}
+
+@media all and (max-width: 422px) {
+  .guidelineBox {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+.guideline {
+  /*display: block;*/
+  /*height: 100px;*/
+  flex-basis: 49.5%;
+  margin-bottom: 2px;
+  border: 0.5px solid #EEE;
+  /*border-top: 1px solid #CCC;*/
+  overflow: hidden;
+  padding: 10px;
+  color: #333;
+}
+
+@media all and (max-width: 580px) {
+  .guideline {
+  flex-basis: 49.5%;
+  }
+}
+
+@media all and (max-width: 422px) {
+  .guideline {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+
+.guideline:hover {
+  background-color: #e8e8e8;
+  cursor: pointer;
+  border-bottom: 1px solid darkgray;
+  border-right: 1px solid darkgray;
+  border-top: 1px solid #e8e8e8;
+}
+
+.guideline:hover .moreLess{
+  color: black;
+}
+
+.guideline h4 {
+  margin: 3px 0 0;
+}
+
+.boardTitle{
+  font-weight: 600;
+
+}
+
+.contentLarge {
+  display: none;
+}
+
+.guideline p {
+  margin: 5px 0 0;
+}
+
+.party {
+  border-left: 4px solid;
+  padding-left: 5px;
+}
+
+
+.guideline .party {
+  border-color: #82a710;
+
+}
+
+.categoryLogos {
+  background-size: cover;
+  width: 80px;
+  height: 80px;
+  /*display: inline-block;*/
+  margin: 0 auto;
+  padding: 0;
+  vertical-align: text-bottom;
+}
+
+
+/*------------------------         -------------------------------*/
+
+.baselineShift{
+  position: relative;
+  top:1px;
+}
+
+h4.category {
+  /*color: #BADA55;*/
+  color: #82a710;
+}
+
+.hidden {
+  display: none;
+}
+
+.showText {
+  display: block;
+}
+
+
+@media all and (max-width: 580px) {
+}
+
+@media all and (max-width: 422px) {
+  .filterBox {
+    top:0;
+    padding: 2px;
+    background-color: #f8f8f8;
+    /*background-color: green;*/
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  input#burgerMenu:checked ~ .filterBox {
+    max-height: 100%;
+  }
+
+  #burgerMenu, #menuLabel{
+    display: block;
+  }
+
+  .filterMenu{
+    padding: 10px 5px 5px;
+    /*position: -webkit-sticky; /* Safari */*/
+    top:0px;
+    /*position: sticky;*/
+    visibility: visible;
+  }
+
+  .guidelineBox {}
+
+  .guidelineBox{
+    /*margin-top: 400px;*/
+  }
+
+}
+
+
+
+
+/*----------------------------------------PROJECT CSS END ----------------------------------------*/
+
+
+
+</style>
+</head>
+
+
+
+
+<body>
+  <div class="graphic-wrapper return-to-school-wrapper">
+    <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Words token emotion tk</h2>
+        <h3 class="graphic-top__graphic-dek">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra libero sit amet sem aliquet auctor. Maecenas tincidunt nisl non ante dictum malesuada. Curabitur accumsan eros a libero ultrices, et aliquet arcu dictum. Nunc ut tellus vel tortor tincidunt semper eu at ipsum. Quisque volutpat aliquet mi a convallis. Proin eget convallis sapien. Suspendisse convallis porttitor lorem sit amet tempor. Curabitur et ante sem. Nam eget mauris eget turpis auctor convallis a ut purus. Maecenas quis ornare nisl. Duis quis massa at ligula hendrerit iaculis. Cras varius eleifend viverra.</h3>
+    </div>
+
+    <div class="graphic">
+
+<!-- ----------------------------------------PROJECT HTML START ----------------------------------------  -->
+      <div class="filterMenu"><input type="checkbox" id="burgerMenu"><label for="burgerMenu" id="menuLabel">Filters <i class="fas fa-bars"></i> <i class="fas fa-times"></i></label>
+       
+        <div class="filterBox clearfix">
+
+        <h3 class="graphic-top__graphic-instructions">
+          <span class="interactive-graphic-cta interactive-graphic-cta__desktop"><img height="23px" class="interactive-graphic-cta-image" src="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/SVG/Tap.svg"></span>
+          <span class="graphic-top__graphic-instructions__desktopspan">Click</span><span class="graphic-top__graphic-instructions__mobilespan">Tap</span> on the buttons to display emotion results. </h3>
+          
+
+
+            <div class="filterButton-group">
+              <!-- <div class="filterIntroText">Choose a word</div> -->
+              <div class="filterButton filterButton-token selected" id="joe">joe</div>
+              <div class="filterButton filterButton-token" id="ballots">ballots</div>
+              <div class="filterButton filterButton-token" id="country">country</div>
+              <div class="filterButton filterButton-token" id="america">america</div>
+              <div class="filterButton filterButton-token" id="trump">trump</div>
+
+            </div>
+        </div>
+      </div>
+
+      <div class="guidelineBox clearfix">
+
+
+      </div>
+<!-- ----------------------------------------PROJECT HTML END ---------------------------------------- -->
+      
+
+    </div>
+
+    <div class="graphic-bottom">
+        <!-- <p class="graphic-bottom__notetext" id="notetext">Note here lore</p> -->
+        <!-- <p class="graphic-bottom__graphic-source" id="source">Source: TKTK</p> -->
+        <p class="graphic-bottom__graphic-byline" id="byline">Andres Plana/ Star graphic</p>
+    </div>
+  </div>
+
+
+
+
+
+    <script>
+
+    var trump_df = []; 
+    d3.csv('data/trump.csv',function(data){
+      data.forEach(function(d,i){
+        trump_df.push(d);
+      })
+    });
+    
+    var biden_df = [];
+    d3.csv('data/biden.csv',function(data){
+      data.forEach(function(d,i){
+        biden_df.push(d);
+      })
+    });
+
+    console.log(trump_df)
+    console.log(biden_df)
+
+    
+
+    // function getJsonFromGoogle(json) {
+    d3.csv('data/trump.csv',function(trumpData){
+
+      // console.log(json.feed.entry[0][`gsx$${categoriesArray[j]}`].$t)
+      console.log(trumpData)
+
+        
+        trumpData.forEach(function(d,i){
+        // console.log(d,i)
+
+          // for (j = 0; j < categoriesArray.length; j++){
+          //     // category name
+          //     // console.log(`${categoriesArray[j]}`)
+          //     // category content
+          //     // console.log(d[`gsx$${categoriesArray[j]}`].$t)
+
+          //     if ( d[`gsx$${categoriesArray[j]}`].$t != '') {
+          //       // console.log('pass')
+
+
+          //     var board = d.gsx$board.$t.toUpperCase();
+          //     var category = `${categoriesArrayLong[j]}`;
+          //     var boardTitle = d.gsx$boardfullname.$t;
+          //     var guidelineShort = d[`gsx$${categoriesArray[j]}`].$t;
+          //     var guidelineClass = category.replace(/ /g, "-");;
+          //     var guidelineFull = d[`gsx$${categoriesArray[j]}`].$t;
+
+          //     d3.select('.guidelineBox')
+          //       .append('div')
+          //       .attr("class", function(){
+          //         if (i == 0){
+          //           return "guideline " + guidelineClass + ' ' + board
+          //         } else {
+          //           return "hidden guideline " + guidelineClass + ' ' + board
+          //         }
+          //       })
+          //       // .classed(guidelineClass,true)
+          //       .append('div')
+          //       .classed("party", true)
+          //       .classed(board, true)
+          //       .html('</h4><div class="boardTitle">' 
+          //         + boardTitle.toUpperCase()
+          //         + '<h4 class="category">' 
+          //         + category 
+          //         + '</div><p class="guidelineSub">'
+          //         + guidelineShort
+          //         // + '</br><span class="moreLess">Show more <i class="fas fa-caret-down"></i></span> </p><div class="contentLarge"><p>'
+          //         // + guidelineFull
+          //         +'</p></div>')
+          //         // +'<p class="moreLess">Show Less <span><i class="fas fa-caret-up"></i></span></p></div>')
+
+          //     }
+
+          // }
+        resize();
+
+        });
+
+
+      $('.filterButton-group .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+        var thisKey = theId + '_mentions';
+
+        // console.log("id is: " + theId + " | the class is: " + theClass+ " | the key is: " + thisKey)
+
+        var results = {
+          "pos_dem": 0,
+          "neg_dem": 0,
+          "pos_rep": 0,
+          "neg_rep": 0
+        }
+
+        for ( var i = 0; i < trumpData.length; i++) {
+          if ( trumpData[i][thisKey] == 'TRUE' ) {
+            // console.log(i + 2, data[i].full_tweet_text)
+            console.log(trumpData[i].positive)
+            results.pos_rep = results.pos_rep + Number(trumpData[i].positive)
+            results.neg_rep = results.neg_rep + Number(trumpData[i].negative)
+            //cange these to the biden data set
+            results.neg_dem = results.neg_dem + Number(trumpData[i].anger)
+            results.pos_dem = results.pos_dem + Number(trumpData[i].joy)
+
+            // Add total possitives
+
+
+            // Add total negatives
+
+            // create the bars
+
+            // add the numbers/labels
+
+
+
+
+          }
+        }
+
+        console.log(results)
+
+
+
+
+
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        theId = theId.toUpperCase();
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+
+        //  $( ".guideline").hide(500);
+        resize();
+
+      });
+
+      $('.filterParties .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+
+        // console.log(".guideline ." + theId)
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+        // $( ".guideline." + theId ).show(500);
+
+        // $( '".guideline .' + theId + '"').show(500);
+
+        // d3.selectAll( ".guideline" )
+        // // .hasClass( theClass )
+
+        //   .classed( "hidden", true )
+        resize();
+
+      });
+
+      // $('.guidelineBox').on('click', '.guideline', function(data){
+
+      //   var contentsHtml = this.children[0].children;
+
+      //   // console.log(contentsHtml);
+
+      //   console.log(this.children[0]);
+
+      //   console.log(d3.select(this.children[0].children[3]).classed("showText"));
+      //   // d3.selectAll('.guideline .guidelineSub').classed("hidden",false);
+      //   if (d3.select(this.children[0].children[3]).classed("showText")) {
+          
+      //     d3.selectAll('.contentLarge').classed('showText', false);
+      //     d3.selectAll('.guidelineSub').classed('hidden', false);
+
+      //   } else {
+        
+      //     d3.selectAll('.contentLarge').classed('showText', false);
+      //     d3.selectAll('.guidelineSub').classed('hidden', false);
+
+      //     $(this).find('.guidelineSub').addClass( "hidden" );
+      //     $(this).find('.contentLarge').addClass( "showText" );
+
+      //   }
+
+      // });
+
+      $('#burgerMenu').on('click', function(){
+        // console.log(this);
+        resize();
+      });
+
+
+      resize();
+
+
+    });
+
+        function resize(){
+        var message = {'resize': 
+                  {
+                    'iframe':'return-to-school-iframe',
+                    'height': document.getElementsByClassName('return-to-school-wrapper')[0].offsetHeight + 20
+                  }
+                };
+       
+        parent.postMessage(message, "*");
+    };
+
+    window.addEventListener('load', function() {
+        resize();
+    });
+
+    window.addEventListener("resize", function(){
+        resize();
+    });
+
+      
+
+
+    </script>
+
+    <!-- <script src="https://spreadsheets.google.com/feeds/list/1b2aOh0InzkTq6ikLi6DgL_ijFUPIP3wkJnK4ZY7wFKU/1/public/values?alt=json-in-script&callback=getJsonFromGoogle"></script> -->
+
+
+    <!-- <style>#return-to-school-iframe{padding:0;width:100%;border:0;overflow:hidden;} </style><iframe id="return-to-school-iframe" src="https://misc.thestar.com/interactivegraphic/2020/08-august/25-back-to-school-covid-guidelines/index.html" scrolling="no" height="1000"></iframe> -->
+
+
+</body>
+</html>

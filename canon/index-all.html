@@ -1,0 +1,1139 @@
+<!-- Adding Images -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Toronto Star</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://misc.thestar.com/interactivegraphic/libraries/d3v4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link href=“https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather+Sans:wght@400;700&display=swap” rel=“stylesheet”>
+
+    <link rel="stylesheet" type="text/css" href="https://misc.thestar.com/interactivegraphic/libraries/interactive-graphic-cta/cta-style.css">
+<style>
+
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  }
+
+.clearfix:after {
+    visibility: hidden;
+    display: none;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+    }
+    
+.clearfix {
+    display: block;
+    }
+
+.graphic-wrapper {
+  margin: 0 auto;
+  /*max-width: 592px; */
+}
+
+.graphic {
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+
+  max-width: 1030px; 
+  margin: 0 auto;
+
+}
+
+.graphic-top {
+  padding: 8px 0; 
+  margin:0 auto;
+  max-width: 592px; }
+  @media (min-width: 526px) {
+    .graphic-top {
+      padding: 12px 0; } }
+  @media (min-width: 592px) {
+    .graphic-top {
+      padding: 16px 0; } }
+
+h2.graphic-top__graphic-hed {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.3em;
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  color: #333;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+  padding-bottom: 4px; }
+  @media (min-width: 526px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 22px; } }
+  @media (min-width: 592px) {
+    h2.graphic-top__graphic-hed {
+      font-size: 24px; } }
+
+h3.graphic-top__graphic-dek {
+  font-size: 16px;
+  line-height: 1.3em;
+  font-weight: 400;
+  margin: 0;
+  font-family: "TorstarTextO3", Times, serif;
+  color: #666;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 17px; } }
+  @media (min-width: 592px) {
+    h3.graphic-top__graphic-dek {
+      font-size: 18px; } }
+
+
+  .graphic-top__graphic-instructions {
+    margin:4px auto 0;
+    max-width: 592px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2em;
+    font-weight: 400;
+    font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+    color: #999;
+    font-style: italic; }
+    @media (min-width: 620px) {
+      .graphic-top__graphic-instructions {
+        font-size: 13px; } }
+    @media (min-width: 849px) {
+      .graphic-top__graphic-instructions {
+        font-size: 14px; } }
+    .graphic-top__graphic-instructions__desktopspan {
+      display: none;
+    }
+     @media (min-width: 849px) {
+       .graphic-top__graphic-instructions__desktopspan {
+        display: inline; }
+         .graphic-top__graphic-instructions__mobilespan {
+        display: none; } 
+      }
+
+.graphic-bottom {
+  margin: 12px auto 0;
+  padding: 6px 0 16px;
+  border-top: 1px solid #cfcfcf; 
+  max-width: 592px; }
+  .graphic-bottom:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0; }
+  @media (min-width: 526px) {
+    .graphic-bottom {
+      padding-top: 7px; } }
+  @media (min-width: 592px) {
+    .graphic-bottom {
+      padding-top: 8px; } }
+
+p.graphic-bottom__graphic-source {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-rendering: optimizeLegibility;
+  text-transform: uppercase; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-source {
+      max-width: 65%;
+      vertical-align: top;
+      float: left; } }
+p.graphic-bottom__graphic-byline {
+  margin: 0;
+  padding-bottom: 5px;
+  font-size: 12px;
+  line-height: 1.3em;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__graphic-byline {
+      text-align: right;
+      max-width: 50%;
+      vertical-align: top;
+      float: right; } }
+p.graphic-bottom__notetext {
+  margin: 0;
+  text-align: left;
+  font-size: 11px;
+  line-height: 1.3em;
+  padding-bottom: 8px;
+  color: #666;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility; }
+  @media (min-width: 526px) {
+    p.graphic-bottom__notetext {
+      font-size: 12px; } }
+  @media (min-width: 592px) {
+    p.graphic-bottom__notetext {
+      font-size: 12px; } }
+
+
+      .interactive-graphic-cta.interactive-graphic-cta__desktop {
+        margin: 0;
+      }
+
+
+
+/*----------------------------------------PROJECT CSS START ----------------------------------------*/
+
+
+
+/*------------------------    TOP NUMBERS     -------------------------------*/
+
+.numbers-container {
+  max-width: 592px;
+  margin: 0 auto;
+
+  /*background: tomato;*/
+}
+
+.numbersbox, .numbersbox-small {
+  width: 480px;
+  height: 40px;
+  margin: 20px auto 0;
+  display: flex;
+  /*font-size: 20px;*/
+} 
+
+.numbersbox-small {
+  width: 480px;
+  height: 20px;
+  margin: 20px auto 0;
+  display: flex;
+  /*font-size: 20px;*/
+}
+
+.numbersbox-words h3, .numbersbox-number p {
+  margin: 0;
+  /*display: inline-block;*/
+}
+
+
+.numbersbox-number{
+  font-size: 40px;
+  font-weight: 600;
+  padding-top: 3px;
+  width: 140px;
+}
+
+
+.numbersbox-number-small{
+  font-size: 18px;
+  font-weight: 600;
+  padding-top: 3px;
+  width: 140px;
+}
+
+.numbersbox-words {
+  /*flex-basis: 50%;*/
+  text-align: center;
+  font-size: 12px;
+  line-height: 22px;
+  width: 200px;
+}
+
+.numbersbox-words h3 {
+  font-weight: 200;
+}
+
+.numbersbox-number.bidenside, .numbersbox-number-small.bidenside {
+  color: #0478BC;
+  text-align: right;
+  /*margin-right: 20px;*/
+}
+
+.numbersbox-number.trumpside, .numbersbox-number-small.trumpside {
+  color: #CC3517;
+  text-align: left;
+  /*margin-left: 20px;*/
+}
+
+.breaker {
+  margin: 15px auto 20px;
+  width: 350px;
+  height: 1px;
+  border-bottom: 1px solid #CECECE;
+}
+
+@media (max-width: 592px) {
+
+  .numbersbox {
+    width: 100%;
+    /*height: 40px;*/
+    /*margin: 20px auto 0;*/
+    /*display: flex;*/
+  }
+
+  .numbersbox-number{
+    /*font-size: 20px;*/
+    /*font-weight: 600;*/
+    /*padding-top: 3px;*/
+    width: 100%;
+    flex-basis: 35%;
+  }
+
+  .numbersbox-words {
+    /*text-align: center;*/
+    /*font-size: 12px;*/
+    /*line-height: 12px;*/
+     width: 100%; 
+    /* max-width: 50px; */
+    flex-basis: 25%;
+  }
+
+  .breaker {
+    /*margin: 15px auto 20px;*/
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 355px) {  
+
+  .numbersbox {
+    /*width: 100%;*/
+    /*height: 40px;*/
+    /*margin: 20px auto 0;*/
+    /*display: flex;*/
+  }
+
+  .numbersbox-number{
+    font-size: 30px;
+    /*font-weight: 600;*/
+    /*padding-top: 3px;*/
+    /*width: 100%;*/
+    /*flex-basis: 35%;*/
+  }
+
+  .numbersbox-words {
+    /*text-align: center;*/
+    font-size: 12px;
+    line-height: 12px;
+     /*width: 100%; */
+    /* max-width: 50px; */
+    flex-basis: 45%;
+  }
+
+  .breaker {
+    /*margin: 15px auto 20px;*/
+    /*width: 100%;*/
+  }
+}
+
+/*------------------------         -------------------------------*/
+
+.baselineShift {
+  position: relative;
+  top:1px;
+}
+
+h4.category {
+  /*color: #BADA55;*/
+  color: #82a710;
+}
+
+.hidden {
+  display: none;
+}
+
+.showText {
+  display: block;
+}
+
+
+@media all and (max-width: 580px) {
+}
+
+@media all and (max-width: 422px) {
+
+}
+
+#svg-container {
+  margin: 0 auto;
+  position:relative;
+
+  /*background-image: url('img/biden_web_BW.png'); */
+  /*background-image: url('img/trump-biden-composite.png'); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+}
+
+#svg-container img {
+  margin: 20px auto;
+  position:absolute;
+  bottom: 10px;
+
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+  height: 50%;
+  opacity: 0.7
+}
+
+@media (max-width: 929px) {
+  #svg-container img  {
+    height: 30%;
+  }
+}
+
+@media (max-width: 715px) {
+  #svg-container img  {
+    height: 20%;
+  }
+}
+
+@media (max-width: 415px) {
+
+  .graphicImage{
+    display:none;
+  }
+}
+
+.biden-image{
+
+}
+
+.trump-image{
+  right: 0;
+}
+
+
+
+
+svg {
+  /*border: 1px solid #ccc;*/
+  position: absolute;
+  top: 0;
+  /*height:500px;*/
+}
+
+.axis line,
+.axis path {
+  shape-rendering: crispEdges;
+  fill: transparent;
+  stroke: #555;
+}
+.axis text {
+  font-size: 12px;
+}
+
+
+.bar {
+  /*fill-opacity: 0.5;*/
+}
+.bar.left {
+  /*fill: steelblue;*/
+  fill: #0478BC;
+}
+.bar.right {
+  /*fill: firebrick;*/
+  fill: #CC3517;
+}
+
+.axis .axislabel {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.labelLeft{
+  fill: #0478BC;
+}
+
+.labelRight{
+  fill: #CC3517;
+}
+
+@media (max-width: 355px) {
+  .axis text {
+    font-size: 11px;
+  }
+
+  .axis .axislabel {
+    font-size: 12px;
+  }
+}
+
+
+
+
+/*----------------------------------------PROJECT CSS END ----------------------------------------*/
+
+
+
+</style>
+</head>
+
+
+
+
+<body>
+  <div class="graphic-wrapper return-to-school-wrapper">
+    <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Biden and Trump's Twitter lexicon</h2>
+        <h3 class="graphic-top__graphic-dek">U.S. President @realDonaldTrump is a far more active Twitter user than his Democratic rival, @JoeBiden. Trump posts an average 35.5 times per day, compared to 11.4 for Biden.</h3>
+    </div>
+
+    <div class="graphic">
+
+<!-- ----------------------------------------PROJECT HTML START ----------------------------------------  -->
+      
+
+      <div class="numbers-container clearfix">
+
+      </div>
+
+
+      <div class="numbers-container clearfix">
+
+        <div class="numbersbox numbersbox-small"> 
+          <div class="numbersbox-number-small bidenside" id="accountbiden">@JoeBiden</div>
+          <div class="numbersbox-words"><h3></h3></div>
+          <div class="numbersbox-number-small trumpside" id="accounttrump">@realDonaldTrump</div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="numbersbox"> 
+          <div class="numbersbox-number bidenside" id="totaltweetsbiden"></div>
+          <div class="numbersbox-words"><h3>Total tweets</h3></div>
+          <div class="numbersbox-number trumpside" id="totaltweetstrump"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="numbersbox">
+          <div class="numbersbox-number bidenside" id="totalwordsbiden"></div>
+          <div class="numbersbox-words"><h3>Total words</h3></div>
+          <div class="numbersbox-number trumpside" id="totalwordstrump"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="numbersbox">
+          <div class="numbersbox-number bidenside" id="totaldifferentbiden"></div>
+          <div class="numbersbox-words"><h3>Total different words</h3></div>
+          <div class="numbersbox-number trumpside" id="totaldifferenttrump"></div>
+        </div>
+
+        <div class="breaker"></div>
+
+        <div class="numbersbox">
+          <div class="numbersbox-number bidenside" id="totalrepeatedwordsbiden"></div>
+          <div class="numbersbox-words"><h3>Repeated words per tweet</h3></div>
+          <div class="numbersbox-number trumpside" id="totalrepeatedwordstrump"></div>
+        </div>
+
+
+      </div>
+
+    </div>
+    <div class="graphic-bottom">
+        <!-- <p class="graphic-bottom__notetext" id="notetext">* Stemming is the reduction of  inflectional forms and sometimes derivationally related forms of a word to a common base form. For instance: "am", "are" and "is" become "be", while "car", "cars", "car's", "cars'" become "car"</p> -->
+        <!-- <p class="graphic-bottom__graphic-source" id="source">Source: TKTK</p> -->
+        <!-- <p class="graphic-bottom__graphic-byline" id="byline">Andres Plana/ Star graphic</p> -->
+    </div>
+
+    <div class="graphic-wrapper return-to-school-wrapper">
+      <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Biden and Trump's most used words on Twitter</h2>
+        <h3 class="graphic-top__graphic-dek">By removing words like “is” and “the,” as well as different forms of the same word, like “am” and “are,” we can get a good idea of what each candidate's focus is. For example, in this case each candidate's most-used word is the other's last name.</h3>
+        
+    </div>
+
+
+    <div class="graphic">
+
+
+
+
+      <div id="svg-container">
+        <img class="graphicImage biden-image" src="img/biden_web_2_BW.png">
+        <img class="graphicImage trump-image" src="img/trump_web_2_BW.png">
+        <!-- <svg id="democrat-chart"></svg> -->
+        <!-- <svg id="republican-chart"></svg> -->
+      </div>
+    </div>
+<!-- ----------------------------------------PROJECT HTML END ---------------------------------------- -->
+      
+
+    </div>
+
+    <div class="graphic-bottom">
+        <!-- <p class="graphic-bottom__notetext" id="notetext1">* Stop words are those that occur many times but may not be important, such as “the”, “is”, “of.”</p>
+        <p class="graphic-bottom__notetext" id="notetext2">** Stemming is the reduction of  inflectional forms and sometimes derivationally related forms of a word to a common base form. For instance: "am", "are" and "is" become "be", while "car", "cars", "car's", "cars'" become "car"</p> -->
+        <p class="graphic-bottom__notetext" id="notetext3">NOTE: All letters have been transformed to lowercase to guarantee matches for all case uses of the same word.</p>
+        <!-- <p class="graphic-bottom__graphic-source" id="source">Source: TKTK</p> -->
+        <p class="graphic-bottom__graphic-byline" id="byline">Andres Plana/ Star graphic</p>
+    </div>
+  </div>
+
+  <style>#myIframe1189{height:1149px;padding:0;width:100%;border:0;overflow:hidden;}@media (min-width:360px){#myIframe1189{height:1115px;}}@media (min-width:375px){#myIframe1189{height:1101px;}}@media (min-width:414px){#myIframe1189{height:1067px;}}@media (min-width:450px){#myIframe1189{height:1053px;}}@media (min-width:768px){#myIframe1189{height:1233px;}}@media (min-width:1086px){#myIframe1189{height:1232px;}}</style><iframe id="myIframe1189" src="https://misc.thestar.com/interactivegraphic/2020/10-october/05-us-elections-twitter/token-sentiment/index-merged.html"scrolling="no"></iframe>
+
+
+
+
+
+    <script>
+
+    var trump_df = []; 
+    var biden_df = [];
+
+
+    var results = {
+      totalTweets_trump: 497,
+      totalTweets_biden: 160,
+      totalWords_trump: 0,
+      totalWords_biden: 0,
+      totalWordsDifferent_trump: 0,
+      totalWordsDifferent_biden: 0,
+      totalrepeated_trump: 0,
+      totalrepeated_biden: 0
+    }
+
+    var showThisMany = 20,
+        tokenData = [];
+
+
+    function tokenMath() {
+
+      results.totalWords_trump = trump_df.length;
+      results.totalWords_biden = biden_df.length;
+
+
+      trump_df.forEach(function(d){
+        results.totalWords_trump += Number(d.n)
+      })
+      biden_df.forEach(function(d){
+        results.totalWords_biden += Number(d.n)
+      })
+
+      results.totalWordsDifferent_trump = trump_df.length;
+      results.totalWordsDifferent_biden = biden_df.length;
+    
+      results.totalrepeated_trump = results.totalWordsDifferent_trump / results.totalWords_trump;
+      results.totalrepeated_biden = results.totalWordsDifferent_biden / results.totalWords_biden;
+
+      for ( var i = 0; i < showThisMany; i++) {
+        tokenData.unshift({
+          trumpword: trump_df[i].word,
+          trumptotal: trump_df[i].n,
+          bidenword: biden_df[i].word,
+          bidentotal: biden_df[i].n
+        })
+      }
+
+      // console.log(tokenData, results)
+
+
+      d3.select('#totaltweetsbiden').text(d3.format(',')(results.totalTweets_biden))
+      d3.select('#totaltweetstrump').text(d3.format(',')(results.totalTweets_trump))
+      d3.select('#totalwordsbiden').text(d3.format(',')(results.totalWords_biden))
+      d3.select('#totalwordstrump').text(d3.format(',')(results.totalWords_trump))
+      d3.select('#totaldifferentbiden').text(d3.format(',')(results.totalWordsDifferent_biden))
+      d3.select('#totaldifferenttrump').text(d3.format(',')(results.totalWordsDifferent_trump))
+      d3.select('#totalrepeatedwordsbiden').text(d3.format(',.0%')(results.totalrepeated_biden))
+      d3.select('#totalrepeatedwordstrump').text(d3.format(',.0%')(results.totalrepeated_trump))
+
+    }
+
+
+
+
+
+
+
+      // so sick of string concatenation for translations
+      function translation(x,y) {
+        return 'translate(' + x + ',' + y + ')';
+      }
+
+    //--------------------------------------------------------------- svg setup
+      // SET UP DIMENSIONS
+      var width = parseInt(d3.select('#svg-container').style('width')) ,
+          height = 450;
+
+      var ticks = 4;
+
+      if (width > 512) {
+        ticks = 12;
+      } else if (width < 300) {
+        ticks = 2;
+      } 
+
+
+      // margin.middle is distance from center line to each y-axis
+      var margin = {
+        top: 20,
+        right: 20,
+        bottom: 24,
+        left: 5,
+        middle: 100
+      };
+
+          
+      if ( width < 300 ) {
+        margin.left = 0;
+        margin.middle = 60;
+      } else if ( width < 592 ) {
+        margin.middle = 75;
+      }
+          
+      // the width of each side of the chart
+      var regionWidth = width/2 - margin.middle;
+
+      // these are the x-coordinates of the y-axes
+      var pointA = regionWidth,
+          pointB = width - regionWidth;
+
+
+      // GET THE TOTAL POPULATION SIZE AND CREATE A FUNCTION FOR RETURNING THE PERCENTAGE
+      // var totalPopulation = d3.sum(tokenData, function(d) { return d.joebiden + d.donaldTrump; }),
+      //     percentage = function(d) { return d / totalPopulation; };
+        
+      // console.log(totalPopulation, percentage)
+
+      var svg = d3.select('#svg-container').append('svg')
+        .attr('width', margin.left + width + margin.right)
+        .attr('height', margin.top + height + margin.bottom)
+        // ADD A GROUP FOR THE SPACE WITHIN THE MARGINS
+        .append('g')
+          .attr('transform', translation(margin.left, margin.top));
+
+
+    d3.csv('data/donald-word-count.csv',function(trumpdata){
+      trumpdata.forEach(function(d,i){
+        trump_df.push(d);
+      })
+        // console.log(trump_df)
+      d3.csv('data/biden-word-count.csv',function(bidendata){
+        bidendata.forEach(function(d,i){
+          biden_df.push(d);
+        })
+        // console.log(biden_df)
+
+        tokenMath()
+
+    var maxValue = Math.max(
+      d3.max(tokenData, function(d) { return Number(d.trumptotal); }),
+      d3.max(tokenData, function(d) { return Number(d.bidentotal); })
+    );
+
+
+
+    // console.log(maxValue)
+
+    // SET UP SCALES
+      
+    // the xScale goes from 0 to the width of a region
+    //  it will be reversed for the left x-axis
+    var xScale = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([0, regionWidth])
+      .nice();
+
+    var xScaleLeft = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([regionWidth, 0]);
+
+    var xScaleRight = d3.scaleLinear()
+      .domain([0, maxValue])
+      .range([0, regionWidth]);
+
+    var yScaleRight = d3.scaleBand()
+      .domain(tokenData.map(function(d) { return d.trumpword; }))
+      // .range([height,0], 0.1);
+      .rangeRound([height,0], 0.1)
+      .padding(0.3);
+
+    var yScaleLeft = d3.scaleBand()
+      .domain(tokenData.map(function(d) { return d.bidenword; }))
+      // .range([height,0], 0.1);
+      .rangeRound([height,0], 0.1)
+      .padding(0.3);
+
+    var yAxisLeft = svg.append("g")
+              .attr("class", "y axis left")
+              .attr("transform", "translate(" + (width/2 - margin.middle) + " ,0)")
+              .call(d3.axisRight(yScaleLeft)
+                  .ticks(4,0)
+                  );
+
+    var yAxisRight = svg.append("g")
+              .attr("class", "y axis right")
+              .attr("transform", "translate(" + (width/2 + margin.middle) + " ,0)")
+              .call(d3.axisLeft(yScaleRight)
+                  .ticks(4,0)
+                  // .tickSize(width)
+                  .tickPadding(margin.middle-4)
+                  // .tickFormat('')
+                  );
+
+    var xAxisRight = svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + (height) + ")")
+                .call(d3.axisBottom(xScaleLeft)
+                  .ticks(ticks)
+                  );
+
+
+
+    var xAxisLeft = svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(" + pointB + "," + (height) + ")")
+                .call(d3.axisBottom(xScaleRight)
+                  .ticks(ticks)
+                  );
+
+
+
+
+
+    // MAKE GROUPS FOR EACH SIDE OF CHART
+    // scale(-1,1) is used to reverse the left side so the bars grow left instead of right
+    var leftBarGroup = svg.append('g')
+      .attr('transform', translation(pointA, 0) + 'scale(-1,1)');
+    var rightBarGroup = svg.append('g')
+      .attr('transform', translation(pointB, 0));
+
+    // DRAW AXES
+    // svg.append('g')
+    //   .attr('class', 'axis y left')
+      // .call(yAxisLeft)
+    svg.selectAll('.y.right text')
+      .attr('transform', translation(margin.middle-10, 0))
+      .style('text-anchor', 'end');
+
+    svg.selectAll('.y.left text')
+      .attr('transform', translation(0, 0))
+      .style('text-anchor', 'start');
+
+    svg.append("g")
+        .attr("class", "y axis labelLeft")
+        .append("text")
+          .attr("class", "axislabel")
+          .attr("transform", function(d) {return "translate(" + pointA + ",-15)"})
+          .attr("dy", ".71em")
+          .style("text-anchor","end")
+          .text(function(d) { return "@JoeBiden"});
+
+    svg.append("g")
+        .attr("class", "y axis labelRight")
+        .append("text")
+          .attr("class", "axislabel")
+          .attr("transform", function(d) {return "translate(" + pointB + ",-15)"})
+          .attr("dy", ".71em")
+          .style("text-anchor","Start")
+          .text(function(d) { return "@realDonaldTrump"});
+
+    // DRAW BARS
+    leftBarGroup.selectAll('.bar.left')
+      .data(tokenData)
+      // .transition().duration(1000)
+      .enter().append('rect')
+        .attr('class', 'bar left')
+        .attr('x', 0)
+        .attr('y', function(d) { return yScaleLeft(d.bidenword); })
+        .attr('width', function(d) { return xScale(d.bidentotal); })
+        .attr('height', yScaleLeft.bandwidth());
+
+    rightBarGroup.selectAll('.bar.right')
+      .data(tokenData)
+      // .transition().duration(1000)
+      .enter().append('rect')
+        .attr('class', 'bar right')
+        .attr('x', 0)
+        .attr('y', function(d) { return yScaleRight(d.trumpword); })
+        .attr('width', function(d) { return xScale(d.trumptotal); })
+        .attr('height', yScaleRight.bandwidth());
+
+    rightBarGroup.selectAll(".label")
+          .data(tokenData)
+          .enter().append("text")
+          .attr("class", function(d) { return d.trumptotal < 0 ? "label negativelabel" : "label positivelabel"; })
+          .attr('x', function(d) { 
+            if ( width - xScale(d.trumptotal) > 20 ){
+              return xScale(d.trumptotal) + 5; 
+            } else {
+              return xScale(d.trumptotal); 
+            } 
+          })
+          .text(function(d) { return d3.format(',')(d.trumptotal); })
+          .attr("y", function(d) { return yScaleRight(d.trumpword) + (yScaleRight.bandwidth() / 2); })
+          .attr("dy", ".37em");
+
+    leftBarGroup.selectAll(".label")
+          .data(tokenData)
+          .enter().append("text")
+          .attr("class", function(d) { return d.bidentotal > 0 ? "label negativelabel" : "label positivelabel"; })
+          .attr('x', function(d) { 
+              // console.log(xScale(Number(d.bidentotal)), pointA - xScale(d.bidentotal))
+            if ( pointA - xScale(d.bidentotal) < 20){
+              return pointA - xScale(d.bidentotal) + 5; 
+            } else {
+              return pointA - xScale(d.bidentotal) - 5; 
+            } 
+          })
+          .style('text-anchor', function(d) { 
+              // console.log(xScale(Number(d.bidentotal)), pointA - xScale(d.bidentotal))
+            if ( pointA - xScale(d.bidentotal) < 20){
+              return 'start'; 
+            } else {
+              return 'end'; 
+            } 
+          })
+          .style('fill', function(d) { 
+              // console.log(xScale(Number(d.bidentotal)), pointA - xScale(d.bidentotal))
+            if ( pointA - xScale(d.bidentotal) < 20){
+              return '#F8F8F8'; 
+            } else {
+              return '#404040'; 
+            } 
+          })
+          .attr("y", function(d) { return yScaleLeft(d.bidenword) + (yScaleLeft.bandwidth() / 2); })
+          .attr("dy", ".37em")
+          .text(function(d) { return d3.format(',')(d.bidentotal); })
+          // .attr('transform', translation(pointA, 0) + 'scale(-1,1)');
+          .attr('transform', translation((width/2 - margin.middle), 0) + 'scale(-1,1)');
+          // .attr('transform', 'scale(-1,1)');
+
+        // console.log('updated')
+
+
+
+
+
+
+ 
+      $('.filterButton-group .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+        var thisKey = theId + '_mentions';
+
+        // console.log("id is: " + theId + " | the class is: " + theClass+ " | the key is: " + thisKey)
+
+        //cange these to the biden data set
+
+        tokenMath(thisKey)
+            // create the bars
+
+            // add the numbers/labels
+
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        theId = theId.toUpperCase();
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+
+        updateData();
+
+       
+        resize();
+
+      });
+
+
+
+
+      $('.filterParties .filterButton').on('click', function(){
+        var theClass = $(this).attr("class");
+        var theId = $(this).attr("id");
+        var testChecker = $(this).hasClass( theClass );
+
+        // console.log(".guideline ." + theId)
+
+        d3.selectAll( '.filterButton').classed("selected", false)
+        d3.select( '#' + theId ).classed("selected", true)
+
+
+        d3.selectAll( '.guideline').classed("hidden", true)
+        d3.selectAll( '.guideline.' + theId).classed("hidden", false)
+
+
+        // Close the menu after clicking
+        $('#burgerMenu').prop('checked',false);
+        // $( ".guideline." + theId ).show(500);
+
+        // $( '".guideline .' + theId + '"').show(500);
+
+        // d3.selectAll( ".guideline" )
+        // // .hasClass( theClass )
+
+        //   .classed( "hidden", true )
+        resize();
+
+      });
+
+
+      // ** Update data section (Called from the onclick)
+function updateData() {
+      maxValue = Math.max(
+        d3.max(tokenData, function(d) { return d.joebiden; }),
+        d3.max(tokenData, function(d) { return d.donaldTrump; })
+      );
+
+      xScale = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([0, regionWidth])
+        .nice();
+
+      xScaleLeft = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([regionWidth, 0]);
+
+      xScaleRight = d3.scaleLinear()
+        .domain([0, maxValue])
+        .range([0, regionWidth]);
+
+      yScale = d3.scaleBand()
+        .domain(tokenData.map(function(d) { return d.group; }))
+        // .range([height,0], 0.1);
+        .rangeRound([height,0], 0.1)
+        .padding(0.3);
+
+
+      yAxisLeft.transition().duration(1000)
+                .call(d3.axisRight(yScaleLeft)
+                    .ticks(4,0)
+                    );
+
+      yAxisRight.transition().duration(1000)
+                .call(d3.axisLeft(yScaleRight)
+                    .ticks(4,0)
+                    // .tickSize(width)
+                    .tickPadding(margin.middle-4)
+                    .tickFormat('')
+                    );
+
+      xAxisRight.transition().duration(1000)
+                .call(d3.axisBottom(xScaleLeft)
+                    .ticks(ticks)
+                  );
+
+      xAxisLeft.transition().duration(1000)
+                .call(d3.axisBottom(xScaleRight)
+                    .ticks(ticks)
+                  );
+
+
+
+      // DRAW BARS
+      leftBarGroup.selectAll('.bar.left')
+        .data(tokenData)
+        .transition().duration(1000)
+        // .enter().append('rect')
+          // .attr('class', 'bar left')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.joebiden); })
+          .attr('height', yScaleLeft.bandwidth());
+
+      rightBarGroup.selectAll('.bar.right')
+        .data(tokenData)
+        .transition().duration(1000)
+        // .enter().append('rect')
+          // .attr('class', 'bar right')
+          .attr('x', 0)
+          .attr('y', function(d) { return yScale(d.group); })
+          .attr('width', function(d) { return xScale(d.donaldTrump); })
+          .attr('height', yScaleRight.bandwidth());
+
+          // console.log('updated')
+
+}
+
+
+
+
+
+      $('#burgerMenu').on('click', function(){
+        // console.log(this);
+        resize();
+      });
+
+
+
+
+
+        }); //end of biden
+      
+      }); //end of trump
+
+
+
+
+
+      resize();
+
+
+    // });
+
+    function resize(){
+        var message = {'resize': 
+                  {
+                    'iframe':'return-to-school-iframe',
+                    'height': document.getElementsByClassName('return-to-school-wrapper')[0].offsetHeight + 20
+                  }
+                };
+       
+        parent.postMessage(message, "*");
+    };
+
+    window.addEventListener('load', function() {
+        resize();
+    });
+
+    window.addEventListener("resize", function(){
+        resize();
+    });
+
+      
+
+
+    </script>
+
+    <!-- <script src="https://spreadsheets.google.com/feeds/list/1b2aOh0InzkTq6ikLi6DgL_ijFUPIP3wkJnK4ZY7wFKU/1/public/values?alt=json-in-script&callback=getJsonFromGoogle"></script> -->
+
+
+    <!-- <style>#return-to-school-iframe{padding:0;width:100%;border:0;overflow:hidden;} </style><iframe id="return-to-school-iframe" src="https://misc.thestar.com/interactivegraphic/2020/08-august/25-back-to-school-covid-guidelines/index.html" scrolling="no" height="1000"></iframe> -->
+
+
+</body>
+</html>

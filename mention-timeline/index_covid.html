@@ -1,0 +1,843 @@
+<!-- Working on new daily cases -->
+<!-- rolling average n=7{3/1/3} -->
+<!-- hover shows date for every dot (desktop) or last dot (mobile)-->
+<!-- changing buttons to be separated -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Toronto Star </title>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://misc.thestar.com/interactivegraphic/libraries/d3v4.min.js"></script>
+
+</head>
+
+<body>
+
+   <div class="graphic-wrapper">
+      <div class="graphic-top">
+        <h2 class="graphic-top__graphic-hed">Top 20 countries day-by-day since reaching 200 confirmed cases</h2>
+        <!-- <h3 class="graphic-top__graphic-dek">New cases is a seven day rolling average</h3> -->
+        <!--  <p class='updated'>Data current as of: <span></span></p>
+
+          <div class="button-group">
+
+            <div>
+              <button id="pill-Deaths" class="active pill" data-country="Deaths">Total deaths</button>
+            </div>
+
+            <div>
+              <button id="pill-Deathsbyday" class="pill" data-country="daybyday">New deaths</button>
+            </div>
+            
+            <dix class="breakerbar"></dix>
+
+            <div>
+              <button id="pill-Cases" class="pill" data-country="Cases">Total cases</button>
+            </div>
+
+            <div>
+              <button id="pill-Casesbyday" class="pill" data-country="total">New cases</button>
+            </div>
+
+          </div>
+
+      </div> -->
+      
+      <div class="chart-container">
+
+        <div id="tooltip" class="hideThis">
+          <div class="totals">
+            <p><span id="country">Canada</span>:</p><p><span id="total">tk</span></p>
+          </div>
+
+        </div>
+
+        <svg id="chart"></svg>
+      </div>
+      <div class="graphic-bottom">
+        <p class="graphic-bottom__notetext" id="notetext"></p>
+        <p class="graphic-bottom__graphic-source" id="source">Source: Johns Hopkins</p>
+        <p class="graphic-bottom__graphic-byline" id="byline"></p>
+      </div>
+    </div>
+
+ 
+<script>
+
+  var newDataNoZeros = []
+
+
+  setTimeout(function(){ 
+    buildThisLineChart()
+  }, 300);
+
+
+var buildThisLineChart = function(){
+
+  newDataNoZeros = []
+  var lookfortotals = false;
+
+  data = [];
+
+
+    var csvData,
+      csvDataString = '',
+      allDays = ['day'],
+      constructorArray = [],
+      dayByDayArray = [],
+      checkFor = 200;
+
+    repeatedCountries = {
+      "Australia":[],
+      "China":[],
+      "Denmark":[],
+      "France":[],
+      "Netherlands":[],
+      "United-Kingdom":[],
+      // "Uganda":[],
+      "Canada":[],
+    }
+
+
+
+
+    var cases = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
+    var deaths = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv';
+    var getThis = deaths;
+    var casesOrDeaths = 'Total deaths';
+
+
+
+
+// d3.csv('time_series_19-covid-Confirmed.csv', function(data){
+    // d3.csv(cases, function(data){
+d3.csv(getThis, function(data){
+
+      d3.selectAll('#chart').html('')
+
+      // var variablelabel = json.feed.entry[0].gsx$axistext.$t;
+      // var variableunit = json.feed.entry[1].gsx$axistext.$t;
+
+      // var dateformat = json.feed.entry[2].gsx$axistext.$t;
+      // var datafloor = json.feed.entry[3].gsx$axistext.$t;
+
+      // var label1 = $('#legendtext1 p').html(json.feed.entry[4].gsx$axistext.$t);
+      // var label2 = $('#legendtext2 p').html(json.feed.entry[5].gsx$axistext.$t);
+      // var label3 = $('#legendtext3 p').html(json.feed.entry[6].gsx$axistext.$t);
+      // var label4 = $('#legendtext4 p').html(json.feed.entry[7].gsx$axistext.$t);
+      // var label5 = $('#legendtext5 p').html(json.feed.entry[8].gsx$axistext.$t);
+      // var label6 = $('#legendtext6 p').html(json.feed.entry[9].gsx$axistext.$t);
+
+      // var notetext  = json.feed.entry[4].gsx$copy.$t;
+
+      // if (notetext !== '') {var notetext = "<p>" + notetext + "</p>"}
+      //         else {var notetext = ""}
+      // document.getElementById("notetext").innerHTML = notetext;
+
+      $('p:empty').remove();
+
+      $('.graphic-legend__legendtext').each(function(d) {
+
+        if ( $(this).children().length > 1 ) {
+           $(this).css('display','inline-block');
+        };
+
+      });
+
+    var margin = {top: 50, right: 25, bottom: 50, left: 70}
+        width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right;
+        height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+
+
+
+    var formatTimeDay = d3.timeFormat("%b %e, %Y");
+    var formatTimeMonth = d3.timeFormat("%b %Y");
+    var formatTimeYear = d3.timeFormat("%Y");
+
+    // var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+
+    var x = d3.scaleTime()
+        .range([0, width]);
+
+    // var x = d3.scaleLog().base(2)
+        // .range([0, width]);
+
+    // var y = d3.scaleLinear()
+        // .range([height, 0]);
+
+    var y = d3.scaleLog().base(2)
+      .range([height, 0]);
+
+    var numberOfTicks, frequency; 
+    if (width < 300) {
+      numberOfTicks = 3;
+      frequency = 10;
+    } else if (width < 592 && width >= 300) {
+      numberOfTicks = 5;
+      frequency = 8;
+    } else {
+      numberOfTicks = 8;
+      frequency = 5;
+    }
+
+    var tickValsX = function(x) { return "Day " + (x*1) + "";}
+    var tickValsY = function(x) { return "Day " + (x*1) + "";}
+
+
+        var xAxis = d3.axisBottom()
+            .ticks(numberOfTicks)
+            .tickFormat(function(d) { return tickValsX(d)})
+            .scale(x);
+
+        var yAxis = d3.axisLeft()
+            .ticks(5).tickFormat(d3.format(".1s"))
+            // .tickFormat(function(d) { return d})
+            .scale(y);
+
+    // var colour = d3.scaleOrdinal().range(["#0077BB","#EEAA33","#CC3311","#009988","#882255","#EE8833"]);
+
+        var color = d3.scaleOrdinal(d3.schemeCategory10)
+
+    d3.selectAll(".graphic-legend__legendtext__box").style("background-color", function(d) { return color(this.id);} );
+
+
+        
+          data.splice(231, 1)
+
+          // console.log(data)
+          var headerNames = d3.keys(data[0]);
+          headerNames.splice(2, 2)
+          headerNames.splice(0, 1)
+          // console.log(headerNames) 
+          var transposedDataArray = [headerNames]
+          // console.log(headerNames.length)
+
+          for (var i = 0; i < data.length; i++) {
+            var thisRow = []
+            for (var j = 0; j < headerNames.length; j++) {
+              var thisCel = data[i][headerNames[j]]
+              thisRow.push(thisCel)
+            }
+            transposedDataArray.push(thisRow)
+          }
+
+          transposedDataArray[144][0] = "South Korea"
+          transposedDataArray.forEach(function(element) {
+            element[0] = element[0].replace("Congo (Brazzaville)", "Congo-Brazzaville");
+            element[0] = element[0].replace("Congo (Kinshasa)", "Congo-Kinshasa");
+            element[0] = element[0].replace("Cote d'Ivoire", "Cote dIvoire");
+            element[0] = element[0].replace("Korea, South", "South Korea");
+            element[0] = element[0].replace(/ /g, "-");
+            element[0] = element[0].replace("*", "");
+            // console.log(element[0])
+          })
+          transposedDataArray[0].splice(0, 1, "date")
+
+          repCountriesList = d3.keys(repeatedCountries)
+
+          var indices = [];
+
+          // var totalLength = [];
+          transposedDataArray.forEach(function(element) {
+            for (var i = 0; i < repCountriesList.length; i++){
+              if(element[0] == repCountriesList[i] ) {
+                // console.log(element[0])
+                repeatedCountries[`${repCountriesList[i]}`].push(element)
+
+                // get an index list to be removed later from the main dataframe
+                var idx = transposedDataArray.indexOf(element);
+                while (idx != -1) {
+                  indices.push(idx);
+                  idx = transposedDataArray.indexOf(element, idx + 1);
+                }
+              }
+            }
+          });
+
+          // remove the repeated country rows from data frame      
+          indices.sort(function(a, b){return b-a})
+          indices.forEach(function(element) {
+            transposedDataArray.splice(element, 1)
+          })
+
+
+          // add all intances within each country
+          repCountriesList.forEach(function(element) {
+            // console.log(element)
+            // arrhead = repeatedCountries[element][0].splice(0, 1)
+
+            repeatedCountries[element][0].splice(0, 1)
+            arr = repeatedCountries[element][0].map(function (x) { 
+              return parseInt(x, 10); 
+            });
+            var arrmerge = arr;
+
+            var countMax = repeatedCountries[element].length
+
+            for (var i = 1; i < repeatedCountries[element].length; i++) {
+              arr = arrmerge;
+              // console.log(i)
+
+              repeatedCountries[element][i].splice(0, 1)
+
+              arr2 = repeatedCountries[element][i].map(function (x) { 
+                return parseInt(x, 10); 
+              });
+
+              for (j in arr) {
+                arrmerge[j] = arr[j] + arr2[j];
+              }
+            }
+            arrmerge.unshift(element)
+
+            transposedDataArray.push(arrmerge)
+
+              // console.log(arrmerge)
+
+          })
+
+          
+          var lastRow = transposedDataArray[1].length
+          // var updated = d3.select('p.updated span').html();
+
+          var parseDate = d3.timeParse("%m/%d/%Y");
+          var formatTime = d3.timeFormat("%B %e");
+          d3.select('p.updated span').html(formatTime(parseDate(transposedDataArray[0][lastRow-1])));
+          
+
+          for ( var i = 1; i < transposedDataArray[0].length; i++){
+            allDays.push(i)
+          }
+
+
+          for (var i = 1; i < transposedDataArray.length; i++) {
+            var isValueChecker = false;
+            for (var j = 1; j < transposedDataArray[i].length-1; j++) {
+              var smaller = parseInt(transposedDataArray[i][j], 10), larger = parseInt(transposedDataArray[i][j+1], 10)
+              if (j == 1 && smaller > checkFor) {
+                isValueChecker = true
+                // console.log(transposedDataArray[i][0], j, smaller, larger)
+                constructorArray.push([transposedDataArray[i][0], j])
+                break;
+              } else if (smaller < checkFor && larger >= checkFor) {
+                // console.log(transposedDataArray[i][0], i , j)
+                isValueChecker = true
+                // console.log(transposedDataArray[i][0], j, smaller, larger)
+                constructorArray.push([transposedDataArray[i][0], j+1])
+                break;
+              }
+            }
+            if (!isValueChecker) {
+              constructorArray.push([transposedDataArray[i][0], -1])
+            }
+          }
+          
+
+
+          // console.log(constructorArray)
+          console.log(transposedDataArray)
+
+          dayByDayArray.push(allDays)
+
+          for (var k = 0; k < constructorArray.length; k++){
+
+            var thisRow = []
+            var thetwohundredrow = constructorArray[k][1]
+            
+            if (thetwohundredrow >= 0){
+                thisRow.push(constructorArray[k][0])
+              for (var l = thetwohundredrow; l < transposedDataArray[k].length; l++){
+
+                if (lookfortotals) {
+
+                  thisRow.push(transposedDataArray[k+1][l])
+
+                } else {
+
+                  //rolling average 
+                  var thisAverage = (transposedDataArray[k+1][l] - transposedDataArray[k+1][l-7])/7
+                  // var thisAverage = (transposedDataArray[k+1][l-3] - transposedDataArray[k+1][l+3])/7
+                  thisRow.push(Math.floor(thisAverage))
+
+                  // console.log(thisAverage)
+
+                  //normal
+                  // thisRow.push(transposedDataArray[k+1][l] - transposedDataArray[k+1][l-1])
+
+                }
+
+              // console.log(transposedDataArray[k][thetwohundredrow])
+              }
+                dayByDayArray.push(thisRow)
+            } else {
+              // dayByDayArray.push([constructorArray[k][0],null])
+            }
+
+          }
+          console.log(dayByDayArray)
+
+
+
+
+
+          // Final step to transpose the data
+          for (var j = 0; j < dayByDayArray[0].length; j++){
+            var thisRow = []
+            for (var i = 0; i < dayByDayArray.length; i++) {
+              if (dayByDayArray[i][j] !== undefined){
+                thisRow.push(dayByDayArray[i][j])
+              } else {
+                thisRow.push('')
+              }
+            }
+              csvDataString = csvDataString + thisRow.toString() + "\n" 
+          }
+
+          csvData = d3.csvParse(csvDataString)
+          console.log(csvData)
+
+
+
+
+          color.domain(d3.keys(csvData[0]).filter(function(key) { return key !== "day"; }));
+
+
+          var countries = color.domain().map(function(name) {
+            return {
+              name: name,
+              values: csvData.map(function(d) {
+                return {date: d.day, cases: +d[name]};
+              })
+            };
+          });
+
+          // console.log(countries)
+          
+
+          countries.forEach(function(element) {
+            var thisCountry = {name: element.name, values: []}
+            for (var m = 0; m < element.values.length; m++) {
+              var thisRow = []
+              if (element.values[m].cases > 0){
+                // console.log(m, "passed")
+                thisCountry.values.push({date:element.values[m].date, cases: element.values[m].cases})
+
+              }
+              // console.log(element.values[m])
+            }
+              newDataNoZeros.push(thisCountry)
+          });
+          // console.log(newDataNoZeros)
+
+
+          var line = d3.line()
+              // .interpolate("basis")
+              .x(function(d) { return x(d.date); })
+              .y(function(d) { return y(d.cases); })
+              .curve(d3.curveLinear);
+
+
+          var svg = d3.select("#chart")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+
+
+          x.domain([
+            d3.min(countries, function(c) { return d3.min(c.values, function(v) { return v.date; }); }),
+            d3.max(countries, function(c) { return c.values.length })
+          ]);
+
+          // y.domain([
+          //   d3.min(countries, function(c) { return d3.min(c.values, function(v) { return v.cases; }); }),
+          //   d3.max(countries, function(c) { return d3.max(c.values, function(v) { return v.cases; }); })
+          // ]);
+
+          y.domain([
+            d3.min(newDataNoZeros, function(c) { return d3.min(c.values, function(v) { return v.cases; }); }),
+            d3.max(newDataNoZeros, function(c) { return d3.max(c.values, function(v) { return v.cases; }); })
+          ]);
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis);
+
+
+          var country = svg.selectAll(".country")
+              .data(countries)
+            .enter().append("g")
+              .attr("id",function(d) { return d.name + "group"})
+              .attr("class", "country");
+
+          // for (var k = 1; k < countries.length; i++) {
+          //   console.log(constructorArray)
+          // }
+
+
+          var path = svg.selectAll(".country").append("path")
+              .data(newDataNoZeros)
+              .attr("id",function(d) { return d.name })
+              .attr("class", "line")
+              .attr("data-id",function(d,i) { return i })
+              .attr("d", function(d) { return line(d.values); })
+              .style("stroke", function(d){ 
+                if (d.name == 'Canada') { 
+                  if ($( "#pill-Deaths" ).hasClass( "active" ) || $( "#pill-Deathsbyday" ).hasClass( "active" )) {
+                    return '#0c7a77'
+                  } else {
+                    return '#7A0C46'
+                  }
+                } else { 
+                  return '#DDDDDD'
+                } 
+              })
+              .style("opacity",0.5);
+
+
+
+          newDataNoZeros.forEach(function(element) {
+            var tothisCountry = "g#" + element.name + "group"
+            // console.log(tothisCountry)
+            for ( var c = frequency; c < element.values.length; c+=frequency) {
+              // console.log(c)
+              var cirlce = svg.select(tothisCountry).append("circle")
+              .attr("class", function(d,i) { return  "circle circle" + d.name } )
+              .attr("data-date",function(d,i) { return element.values[c - 1].date })
+              .attr("data-cases",function(d,i) { return element.values[c - 1].cases })
+              .attr("r", 2.5)
+              .attr("cx", x(element.values[c - 1].date) )
+              .attr("cy", y(element.values[c - 1].cases) )
+              // .style("fill", "#DDDDDD")
+              .style("fill", function(d){ 
+                if (d.name == 'Canada') { 
+                  if ($( "#pill-Deaths" ).hasClass( "active" ) || $( "#pill-Deathsbyday" ).hasClass( "active" )) {
+                    return '#0c7a77'
+                  } else {
+                    return '#7A0C46'
+                  }
+                } 
+              })
+              .transition()
+                        .duration(3000)
+                        // .ease("linear")
+                        .attr("opacity", 1);
+            }
+
+          })
+
+
+          var cirlce = svg.selectAll(".country").append("circle")
+              .data(newDataNoZeros)
+              .attr("id",function(d,i) {return d.name + "circle"})
+              // .attr("class", "circle")
+              .attr("class", function(d,i) { return  "circle circle" + d.name } )
+              .attr("r", 3)
+              .attr("cx", function(d,i) { return x(d.values[d.values.length - 1].date)})
+              .attr("cy", function(d,i) { return y(d.values[d.values.length - 1].cases)})
+              .style("fill", function(d){ 
+                if (d.name == 'Canada') { 
+                  if ($( "#pill-Deaths" ).hasClass( "active" ) || $( "#pill-Deathsbyday" ).hasClass( "active" )) {
+                    return '#0c7a77'
+                  } else {
+                    return '#7A0C46'
+                  }
+                } 
+              })
+              .transition()
+                        .duration(3000)
+                        // .ease("linear")
+                        .attr("opacity", 1);
+
+
+          var text = svg.selectAll(".country").append("text")
+              .data(newDataNoZeros)
+              .attr("class","annotation shadow")
+              .attr("id",function(d,i) {return d.name + "textbelow"})
+              .attr("x",0)
+              .attr("y",0)
+              .attr("transform", function(d) { return "translate(" + x(d.values[d.values.length - 1].date) + "," + y(d.values[d.values.length - 1].cases) + ")"; })
+              .attr("dy",-10)
+              .attr("text-anchor", "middle")
+              .text(function(d,i) {return d.name.replace("-", " ").replace(/US/g, "United States") + " " + d3.format(",")(d.values[d.values.length - 1].cases)})
+              .transition()
+                        .duration(3000)
+                        // .ease("linear")
+                        .attr("opacity", 1);
+
+
+          var text = svg.selectAll(".country").append("text")
+              .data(newDataNoZeros)
+              .attr("class","annotation")
+              .attr("id",function(d,i) {return d.name + "text"})
+              .attr("x",0)
+              .attr("y",0)
+              .attr("transform", function(d) { return "translate(" + x(d.values[d.values.length - 1].date) + "," + y(d.values[d.values.length - 1].cases) + ")"; })
+              .attr("dy",-10)
+              // .attr("text-anchor", "middle")
+              .attr("text-anchor", function(d){
+                if (x(d.values[d.values.length - 1].date) >= width-50 ){
+                  return "end"
+                } else {
+                  return "middle"
+                }
+              })
+              .text(function(d,i) {return d.name.replace("-", " ").replace(/US/g, "United States") + " " + d3.format(",")(d.values[d.values.length - 1].cases)})
+              .transition()
+                        .duration(3000)
+                        // .ease("linear")
+                        .attr("opacity", 1);
+
+
+              var totalLength = [];
+
+              path._groups[0].forEach(function(element) {
+                totalLength.push(element.getTotalLength())
+              });
+
+              // console.log(totalLength);
+
+                for (var a = 0; a < path._groups[0].length; a++) {
+                    // console.log(totalLength[a])
+                  var thisID = "#" + countries[a].name
+
+                   d3.select(path._groups[0][a])
+                      .attr("stroke-dasharray", totalLength[a] + " " + totalLength[a] ) 
+                      .attr("stroke-dashoffset", totalLength[a])
+                      .transition()
+                        .duration(3000)
+                        // .ease("linear")
+                        .attr("stroke-dashoffset", 0);
+
+                  for (var b = 0; b < countries[0].values.length; b++) {
+
+
+                  // console.log(x(countries[a].values[b].date))
+                    // svg.selectAll(".country").append("circle")
+                          // .attr("r", 4)
+                          // .attr("cx", function(d,i) { return x(countries[a].values[b].date)})
+                          // .attr("cy", function(d,i) { return y(countries[a].values[b].cases)})
+
+
+
+                  }
+
+                }
+
+
+
+     /// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    var chart = d3.select("#chart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+     
+    // ------------------------------------------------------------- INTERACTIVITY START
+
+          
+
+
+
+          chart.append("g")
+                .attr("class", "t axis");
+
+          chart.append("g")
+              .attr("class", "x axis")
+              .append("text")
+                .attr("id", "axislabelX")
+                .attr("class", "axislabel")
+                .attr("transform", "translate(" + (width / 2) + "," + (height+30) + ")")
+                .attr("dy", "0.71em")
+                .style("text-anchor","middle")
+                // .text("Day by day (log)");
+
+          chart.append("g")
+              .attr("class", "y axis")
+              .append("text")
+                .attr("id", "axislabelY")
+                .attr("class", "axislabel")
+                .attr("transform", "translate(-68,-30)")
+                .attr("dy", "0.71em")
+                .style("text-anchor","start")
+                .text(casesOrDeaths + " (log)");
+           
+
+    function resize() {
+        var width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right;
+            height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+
+            if (width < 300) {
+              var tickVals = [data[0].date,data[Math.floor(data.length/2)].date,data[data.length-1].date];
+            } else {
+              var tickVals = null;
+            }
+
+        /* Update the range of the scale with new width/height */
+        x.range([0, width]);
+        y.range([height, 0]);
+
+         chart.select(".t.axis")
+            .attr("transform", "translate(" + width + " ,0)")
+            .call(d3.axisLeft(y)
+                .ticks(6)
+                .tickSize(width)
+                );
+
+
+
+        chart.select('#hoverbox')
+            .attr("width", width)
+            .attr("height", height);
+
+        /* Force D3 to recalculate and update the line */
+        chart.selectAll('.line')
+          .attr("d", function(d) { return valueline(d.values); })
+
+    iframeResize();
+       
+      }
+
+      d3.select(window).on('resize', resize);
+      d3.select(window).on('load', resize);
+      resize();
+
+
+    }); 
+            
+            // Set the domain to match thestar.com so we can access the iframe from within its content
+
+            // document.domain = "thestar.com";
+
+          var iframeName = "myIframe-200-covid-time-series"
+                iframeResize();
+
+        function iframeResize() {
+            var message = {
+                'resize': {
+                    'iframe': iframeName,
+                    'height': document.getElementsByClassName('graphic-wrapper')[0].offsetHeight
+                }
+            };
+            parent.postMessage(message, "*");
+        };
+
+ 
+}
+
+
+  $(".pill").on("click",function(){
+    if ( $(this).hasClass( "active" ) ){
+      // dayOrTotal
+    } else {
+      
+      $("#tooltip").css("display", "none")
+      d3.selectAll('.pill').classed('active', false)
+      d3.select(this).classed('active', true)
+
+        setTimeout(function(){ 
+          buildThisLineChart()
+        }, 300);
+
+      d3.select('#chart')
+              .transition()
+              .duration(3000)
+              // .ease("linear")
+              .attr("opacity", 1);
+    // buildThisLineChart()
+    }
+  })
+
+
+
+  $("svg").on("mousemove", ".line", function(d){
+
+            var thisCountry = $(this).attr('id')
+            var thisCountryId = $(this).attr('data-id')
+
+            var locationX = d3.select("#" + thisCountry + "circle")._groups[0][0].cx.baseVal.value
+            var locationY = d3.select("#" + thisCountry + "circle")._groups[0][0].cy.baseVal.value
+
+            var currentCases = newDataNoZeros[thisCountryId].values.length-1;
+            
+            $(".annotation").css("visibility", "hidden")
+
+            d3.selectAll(".line").classed("highlighted-deaths", false)
+            d3.selectAll(".line").classed("highlighted-cases", false)
+
+            d3.selectAll(".circle").classed("highlightedCircle-deaths", false)
+            d3.selectAll(".circle").classed("highlightedCircle-cases", false)
+
+            d3.select("#total").classed("total-deaths", false)
+            d3.select("#total").classed("total-cases", false)
+
+            if ($( "#pill-Deaths" ).hasClass( "active" ) || $( "#pill-Deathsbyday" ).hasClass( "active" )) {
+              d3.select("#" + thisCountry + "circle").classed("highlightedCircle-deaths", true)
+              d3.selectAll(".circle" + thisCountry).classed("highlightedCircle-deaths", true)
+              d3.select("#" + thisCountry).classed("highlighted-deaths", true)
+              d3.select("#total").classed("total-deaths", true)
+            } else {
+              d3.select("#" + thisCountry + "circle").classed("highlightedCircle-cases", true)
+              d3.selectAll(".circle" + thisCountry).classed("highlightedCircle-cases", true)
+              d3.select("#" + thisCountry).classed("highlighted-cases", true)
+              d3.select("#total").classed("total-cases", true)
+            }
+
+            $("#tooltip").css("display", "block").css("left",locationX+60).css("top",locationY - 5)
+
+            $('#country').text(thisCountry.replace("-", " ").replace(/US/g, "United States"));
+            $('#total').text(d3.format(",")(newDataNoZeros[thisCountryId].values[currentCases].cases));
+
+
+
+            d3.select(this).node().parentNode.parentNode.appendChild(d3.select(this).node().parentNode);
+
+          });
+
+
+  $(".chart-container").on("mouseleave", function(d){
+            $(".annotation").css("visibility", "visible")
+            $("#tooltip").css("display", "none")
+
+            d3.selectAll(".line").classed("highlighted-deaths", false)
+            d3.selectAll(".line").classed("highlighted-cases", false)
+
+            d3.selectAll(".circle").classed("highlightedCircle-deaths", false)
+            d3.selectAll(".circle").classed("highlightedCircle-cases", false)
+
+            d3.select("#total").classed("total-deaths", false)
+            d3.select("#total").classed("total-cases", false)
+
+            d3.select("#Canada").node().parentNode.parentNode.appendChild(d3.select("#Canada").node().parentNode);
+  })
+
+
+
+</script>
+
+    <!-- <style>#myIframe-200-covid-time-series{padding:0;width:100%;border:0;overflow:hidden;}</style><iframe id="myIframe-200-covid-time-series" src="https://misc.thestar.com/interactivegraphic/andres-tests/covid-cases-day-by-day-after-200/index.html"scrolling="no" height="1000"></iframe> -->
+
+</body>
+</html>
